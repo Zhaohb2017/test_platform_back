@@ -1,0 +1,1125 @@
+[29/Jul/2019 10:47:40] "GET /knowledge/k_list HTTP/1.1" 200 1490
+Internal Server Error: /cases/c_del
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'c_id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/phonetest/gale/TesterRunner/apps/cases/views.py", line 149, in DeleteView
+    c_id = request.GET['c_id']
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'c_id'
+[29/Jul/2019 10:47:46] "GET /cases/c_del HTTP/1.1" 500 70230
+[29/Jul/2019 12:14:36] "GET /knowledge/k_list HTTP/1.1" 200 1490
+Internal Server Error: /cases/c_del
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'c_id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/phonetest/gale/TesterRunner/apps/cases/views.py", line 149, in DeleteView
+    c_id = request.GET['c_id']
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'c_id'
+[29/Jul/2019 12:14:38] "GET /cases/c_del HTTP/1.1" 500 70234
+[29/Jul/2019 12:16:13] "GET /knowledge/k_list HTTP/1.1" 200 1490
+Internal Server Error: /knowledge/s_del
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 't_id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/phonetest/gale/TesterRunner/apps/knowledge/views.py", line 103, in DeleteView
+    s_id = request.GET['t_id']
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 't_id'
+[29/Jul/2019 12:16:16] "GET /knowledge/s_del HTTP/1.1" 500 70319
+[29/Jul/2019 12:16:44] "GET /knowledge/k_list HTTP/1.1" 200 1490
+[29/Jul/2019 12:17:02] "GET /knowledge/k_list HTTP/1.1" 200 1490
+[29/Jul/2019 12:17:02] "GET /knowledge/k_list HTTP/1.1" 200 1490
+[29/Jul/2019 12:17:35] "GET /knowledge/k_list HTTP/1.1" 200 1490
+[29/Jul/2019 12:18:45] "GET /knowledge/s_list HTTP/1.1" 200 249
+[29/Jul/2019 12:18:53] "GET /knowledge/k_list HTTP/1.1" 200 1490
+Internal Server Error: /cases/c_del
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'c_id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/phonetest/gale/TesterRunner/apps/cases/views.py", line 149, in DeleteView
+    c_id = request.GET['c_id']
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'c_id'
+[29/Jul/2019 12:18:56] "GET /cases/c_del HTTP/1.1" 500 70234
+Internal Server Error: /cases/c_del
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'c_id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/phonetest/gale/TesterRunner/apps/cases/views.py", line 149, in DeleteView
+    c_id = request.GET['c_id']
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'c_id'
+[29/Jul/2019 12:19:24] "GET /cases/c_del HTTP/1.1" 500 70234
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 29, 2019 - 10:47:11
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+Internal Server Error: /cases/c_del
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'c_id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/phonetest/gale/TesterRunner/apps/cases/views.py", line 149, in DeleteView
+    c_id = request.GET['c_id']
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'c_id'
+[29/Jul/2019 12:21:44] "GET /cases/c_del HTTP/1.1" 500 70234
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 29, 2019 - 12:21:10
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+[29/Jul/2019 12:23:24] "GET /knowledge/k_list HTTP/1.1" 200 1490
+[29/Jul/2019 12:23:24] "GET /knowledge/k_list HTTP/1.1" 200 1490
+[29/Jul/2019 12:23:31] "GET /knowledge/k_list HTTP/1.1" 200 1490
+Not Found: /knowledge/c_del
+[29/Jul/2019 12:23:34] "GET /knowledge/c_del HTTP/1.1" 404 4236
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 29, 2019 - 12:21:54
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+[29/Jul/2019 12:27:05] "GET /knowledge/k_list HTTP/1.1" 200 1490
+[29/Jul/2019 12:27:05] "GET /knowledge/k_list HTTP/1.1" 200 1490
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 29, 2019 - 12:26:06
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+Not Found: /knowledge/k_del
+[29/Jul/2019 12:27:33] "GET /knowledge/k_del HTTP/1.1" 404 4236
+Not Found: /knowledge/k_del
+[29/Jul/2019 12:27:39] "GET /knowledge/k_del HTTP/1.1" 404 4236
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 29, 2019 - 12:27:23
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 29, 2019 - 12:29:12
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+Internal Server Error: /knowledge/k_del
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'c_id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/phonetest/gale/TesterRunner/apps/knowledge/views.py", line 168, in DeleteTestPoint
+    s_id = request.GET['c_id']
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'c_id'
+[29/Jul/2019 12:29:17] "GET /knowledge/k_del HTTP/1.1" 500 70340
+[29/Jul/2019 12:30:30] "GET /knowledge/k_list HTTP/1.1" 200 1490
+[29/Jul/2019 12:30:30] "GET /knowledge/k_list HTTP/1.1" 200 1490
+Internal Server Error: /knowledge/k_del
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'c_id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/phonetest/gale/TesterRunner/apps/knowledge/views.py", line 168, in DeleteTestPoint
+    s_id = request.GET['c_id']
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'c_id'
+[29/Jul/2019 12:30:38] "GET /knowledge/k_del HTTP/1.1" 500 70340
+[30/Jul/2019 01:10:21] "GET /bugs/b_list HTTP/1.1" 200 275
+[30/Jul/2019 01:10:27] "GET /knowledge/k_list HTTP/1.1" 200 1490
+[30/Jul/2019 01:31:45] "GET /knowledge/s_list HTTP/1.1" 200 249
+[30/Jul/2019 01:31:46] "GET /knowledge/k_list HTTP/1.1" 200 1490
+[30/Jul/2019 01:31:47] "GET /knowledge/s_list HTTP/1.1" 200 249
+[30/Jul/2019 01:33:01] "GET /knowledge/k_list HTTP/1.1" 200 1490
+Internal Server Error: /knowledge/k_del
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'c_id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/phonetest/gale/TesterRunner/apps/knowledge/views.py", line 168, in DeleteTestPoint
+    s_id = request.GET['c_id']
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'c_id'
+[30/Jul/2019 01:33:23] "GET /knowledge/k_del HTTP/1.1" 500 70340
+[30/Jul/2019 01:34:25] "GET /knowledge/k_list HTTP/1.1" 200 1490
+[30/Jul/2019 01:34:30] "GET /knowledge/k_list HTTP/1.1" 200 1490
+[30/Jul/2019 01:38:39] "GET /knowledge/k_list HTTP/1.1" 200 1490
+Internal Server Error: /knowledge/k_del
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'c_id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/phonetest/gale/TesterRunner/apps/knowledge/views.py", line 168, in DeleteTestPoint
+    s_id = request.GET['c_id']
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'c_id'
+[30/Jul/2019 01:38:46] "GET /knowledge/k_del HTTP/1.1" 500 70340
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 29, 2019 - 12:29:15
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+[30/Jul/2019 01:41:02] "GET /knowledge/k_list HTTP/1.1" 200 1556
+Internal Server Error: /knowledge/k_del
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'c_id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/phonetest/gale/TesterRunner/apps/knowledge/views.py", line 169, in DeleteTestPoint
+    s_id = request.GET['c_id']
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'c_id'
+[30/Jul/2019 01:42:02] "GET /knowledge/k_del HTTP/1.1" 500 70340
+Internal Server Error: /knowledge/k_del
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'c_id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/phonetest/gale/TesterRunner/apps/knowledge/views.py", line 169, in DeleteTestPoint
+    s_id = request.GET['c_id']
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'c_id'
+[30/Jul/2019 01:42:13] "GET /knowledge/k_del HTTP/1.1" 500 70340
+[30/Jul/2019 01:42:46] "GET /knowledge/k_list HTTP/1.1" 200 1556
+[30/Jul/2019 01:42:55] "GET /knowledge/k_del?c_id=1 HTTP/1.1" 200 1252
+[30/Jul/2019 01:42:55] "GET /knowledge/k_list HTTP/1.1" 200 1252
+[30/Jul/2019 01:43:15] "GET /knowledge/k_del?c_id=2 HTTP/1.1" 200 1012
+[30/Jul/2019 01:43:15] "GET /knowledge/k_list HTTP/1.1" 200 1012
+[30/Jul/2019 01:43:18] "GET /knowledge/k_del?c_id=3 HTTP/1.1" 200 693
+[30/Jul/2019 01:43:19] "GET /knowledge/k_list HTTP/1.1" 200 693
+[30/Jul/2019 01:43:21] "GET /knowledge/k_del?c_id=6 HTTP/1.1" 200 463
+[30/Jul/2019 01:43:21] "GET /knowledge/k_list HTTP/1.1" 200 463
+[30/Jul/2019 01:43:23] "GET /knowledge/k_del?c_id=5 HTTP/1.1" 200 236
+[30/Jul/2019 01:43:23] "GET /knowledge/k_list HTTP/1.1" 200 236
+[30/Jul/2019 01:43:30] "GET /knowledge/s_list HTTP/1.1" 200 249
+[30/Jul/2019 01:43:32] "GET /knowledge/s_del?t_id=19 HTTP/1.1" 200 156
+[30/Jul/2019 01:43:32] "GET /knowledge/s_list HTTP/1.1" 200 156
+[30/Jul/2019 01:55:06] "GET /addcard/c_list HTTP/1.1" 200 805
+[30/Jul/2019 01:55:29] "GET /addcard/c_del?t_id=2 HTTP/1.1" 200 730
+[30/Jul/2019 01:55:29] "GET /addcard/c_list HTTP/1.1" 200 730
+[30/Jul/2019 01:55:31] "GET /addcard/c_del?t_id=1 HTTP/1.1" 200 661
+[30/Jul/2019 01:55:31] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 02:07:31] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 02:07:42] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 02:07:43] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 02:11:35] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 02:12:23] "GET /addcard/c_list HTTP/1.1" 200 661
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 01:40:42
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+1111111111111111111 1
+1111111111111111111 2
+1111111111111111111 3
+1111111111111111111 6
+1111111111111111111 5
+1111111111111111111 19
+11111111111 [{'t_id': 1, 't_method': '21312', 't_card': '3213', 't_remark': '1'}, {'t_id': 2, 't_method': '1321312', 't_card': '32131231', 't_remark': '2'}, {'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 1, 't_method': '21312', 't_card': '3213', 't_remark': '1'}, {'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+Not Found: /deloyip/i_add
+[30/Jul/2019 02:37:19] "POST /deloyip/i_add HTTP/1.1" 404 3201
+Not Found: /deloyip/i_add
+[30/Jul/2019 02:37:24] "POST /deloyip/i_add HTTP/1.1" 404 3201
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 02:27:50
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+Not Found: /deloyip/i_add
+[30/Jul/2019 02:38:20] "POST /deloyip/i_add HTTP/1.1" 404 3310
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 02:37:46
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 02:38:56
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 02:39:28
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+Not Found: /deloyip/i_add
+[30/Jul/2019 02:40:16] "POST /deloyip/i_add HTTP/1.1" 404 3310
+Not Found: /deloyip/i_add
+[30/Jul/2019 02:40:18] "POST /deloyip/i_add HTTP/1.1" 404 3310
+[30/Jul/2019 02:40:33] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 02:40:39] "POST /addcard/c_add HTTP/1.1" 200 12
+[30/Jul/2019 02:40:40] "GET /addcard/c_list HTTP/1.1" 200 730
+[30/Jul/2019 02:41:18] "GET /addcard/c_del?t_id=8 HTTP/1.1" 200 661
+[30/Jul/2019 02:41:18] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 02:41:43] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 02:41:46] "POST /deployip/i_add HTTP/1.1" 200 12
+[30/Jul/2019 02:41:47] "GET /addcard/c_list HTTP/1.1" 200 661
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 02:40:14
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+data: {'c_gameMethod': '3213', 'c_gameCard': '321', 'c_remark': '213'}
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}, {'t_id': 8, 't_method': '3213', 't_card': '321', 't_remark': '213'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+data: {'c_ip': '312', 'c_port': '321', 'c_remake': '321'}
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 02:44:31
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 02:44:45
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+Internal Server Error: /deployip/i_list
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+TypeError: GetDeployIP() takes 0 positional arguments but 1 was given
+[30/Jul/2019 02:45:39] "GET /deployip/i_list HTTP/1.1" 500 58725
+Internal Server Error: /deployip/i_list
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+TypeError: GetDeployIP() takes 0 positional arguments but 1 was given
+[30/Jul/2019 02:46:18] "GET /deployip/i_list HTTP/1.1" 500 58725
+Internal Server Error: /deployip/i_list
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+TypeError: GetDeployIP() takes 0 positional arguments but 1 was given
+[30/Jul/2019 02:46:32] "GET /deployip/i_list HTTP/1.1" 500 58725
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 02:45:05
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+Unhandled exception in thread started by <function check_errors.<locals>.wrapper at 0x7fd2a3c379d8>
+Traceback (most recent call last):
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/autoreload.py", line 225, in wrapper
+    fn(*args, **kwargs)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/management/commands/runserver.py", line 117, in inner_run
+    self.check(display_num_errors=True)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/management/base.py", line 379, in check
+    include_deployment_checks=include_deployment_checks,
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/management/base.py", line 366, in _run_checks
+    return checks.run_checks(**kwargs)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/checks/registry.py", line 71, in run_checks
+    new_errors = check(app_configs=app_configs)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/checks/urls.py", line 13, in check_url_config
+    return check_resolver(resolver)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/core/checks/urls.py", line 23, in check_resolver
+    return check_method()
+  File "/usr/local/python36/lib/python3.6/site-packages/django/urls/resolvers.py", line 396, in check
+    for pattern in self.url_patterns:
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/functional.py", line 37, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/urls/resolvers.py", line 533, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/utils/functional.py", line 37, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/usr/local/python36/lib/python3.6/site-packages/django/urls/resolvers.py", line 526, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/local/python36/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/phonetest/gale/TesterRunner/TesterRunner/urls.py", line 37, in <module>
+    path('deployip/', include('apps.deployip.urls', namespace='apps.deployip')),
+  File "/usr/local/python36/lib/python3.6/site-packages/django/urls/conf.py", line 34, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/usr/local/python36/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/phonetest/gale/TesterRunner/apps/deployip/urls.py", line 8, in <module>
+    path('i_list', views.QueryList),
+AttributeError: module 'apps.deployip.views' has no attribute 'QueryList'
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+[30/Jul/2019 02:50:03] "GET /deployip/i_list HTTP/1.1" 200 33
+[30/Jul/2019 02:50:07] "GET /cases/c_list?c_project=%E8%B6%85%E8%B6%8A%E9%A1%B9%E7%9B%AE%E7%BB%84&c_version=%E4%B8%BB%E7%89%88%E6%9C%AC&c_play=%E9%82%B5%E9%98%B3%E5%AD%97%E7%89%8C HTTP/1.1" 200 3436
+[30/Jul/2019 02:50:09] "GET /cases/c_list?c_project=%E8%B6%85%E8%B6%8A%E9%A1%B9%E7%9B%AE%E7%BB%84&c_version=%E4%B8%BB%E7%89%88%E6%9C%AC&c_play=%E9%82%B5%E9%98%B3%E5%89%A5%E7%9A%AE HTTP/1.1" 200 4372
+[30/Jul/2019 02:50:13] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 02:50:14] "GET /deployip/i_list HTTP/1.1" 200 33
+[30/Jul/2019 02:50:15] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 02:50:18] "GET /deployip/i_list HTTP/1.1" 200 33
+[30/Jul/2019 02:50:41] "GET /deployip/i_list HTTP/1.1" 200 33
+[30/Jul/2019 02:50:43] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 02:50:44] "GET /deployip/i_list HTTP/1.1" 200 33
+[30/Jul/2019 02:50:59] "GET /deployip/i_list HTTP/1.1" 200 33
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 02:49:36
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+project 超越项目组
+version 主版本
+play 邵阳字牌
+project 超越项目组
+version 主版本
+play 邵阳剥皮
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+[30/Jul/2019 02:51:26] "GET /deployip/i_list HTTP/1.1" 200 64
+[30/Jul/2019 02:51:35] "GET /addcard/c_del?t_id=1 HTTP/1.1" 200 661
+[30/Jul/2019 02:51:35] "GET /deployip/i_list HTTP/1.1" 200 64
+[30/Jul/2019 02:52:05] "GET /addcard/c_del?t_id=1 HTTP/1.1" 200 661
+[30/Jul/2019 02:52:05] "GET /deployip/i_list HTTP/1.1" 200 64
+[30/Jul/2019 02:52:30] "GET /addcard/c_del?t_id=1 HTTP/1.1" 200 661
+[30/Jul/2019 02:52:30] "GET /deployip/i_list HTTP/1.1" 200 64
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 02:51:25
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+[30/Jul/2019 02:53:18] "GET /deployip/i_list HTTP/1.1" 200 64
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 02:53:17
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 02:53:28
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 02:54:13
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 02:54:32
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+[30/Jul/2019 02:54:36] "GET /deployip/i_del?t_id=1 HTTP/1.1" 200 2
+[30/Jul/2019 02:54:36] "GET /deployip/i_list HTTP/1.1" 200 2
+[30/Jul/2019 02:54:40] "POST /deployip/i_add HTTP/1.1" 200 12
+[30/Jul/2019 02:54:41] "GET /deployip/i_list HTTP/1.1" 200 73
+[30/Jul/2019 02:54:44] "GET /deployip/i_del?t_id=2 HTTP/1.1" 200 2
+[30/Jul/2019 02:54:44] "GET /deployip/i_list HTTP/1.1" 200 2
+[30/Jul/2019 02:54:48] "POST /deployip/i_add HTTP/1.1" 200 12
+[30/Jul/2019 02:54:49] "GET /deployip/i_list HTTP/1.1" 200 73
+[30/Jul/2019 03:13:30] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 03:22:02] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 03:22:52] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 03:23:41] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 03:24:31] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 05:27:54] "GET /deployip/i_list HTTP/1.1" 200 73
+[30/Jul/2019 05:30:09] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 05:35:32] "GET /cases/c_list?c_project=%E8%B6%85%E8%B6%8A%E9%A1%B9%E7%9B%AE%E7%BB%84&c_version=%E4%B8%BB%E7%89%88%E6%9C%AC&c_play=%E9%82%B5%E9%98%B3%E5%AD%97%E7%89%8C HTTP/1.1" 200 3436
+[30/Jul/2019 05:35:34] "GET /cases/r_list?r_id=17 HTTP/1.1" 200 2
+[30/Jul/2019 05:35:45] "GET /cases/r_list?r_id=44 HTTP/1.1" 200 1010
+[30/Jul/2019 05:37:11] "GET /deployip/i_list HTTP/1.1" 200 73
+[30/Jul/2019 05:37:12] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 05:41:40] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 05:42:42] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 05:44:03] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 05:44:09] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 05:48:19] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 05:49:50] "GET /addcard/c_list HTTP/1.1" 200 661
+[30/Jul/2019 05:50:18] "GET /addcard/c_del?t_id=3 HTTP/1.1" 200 2
+[30/Jul/2019 05:50:18] "GET /addcard/c_list HTTP/1.1" 200 2
+[30/Jul/2019 05:50:38] "GET /addcard/c_list HTTP/1.1" 200 2
+[30/Jul/2019 05:50:42] "POST /addcard/c_add HTTP/1.1" 200 12
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 02:54:34
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+1111111111111111111 1
+data: {'c_ip': 'dasdsad', 'c_port': 'sadasd', 'c_remake': 'sadas'}
+1111111111111111111 2
+data: {'c_ip': 'dasdsa', 'c_port': 'dsad', 'c_remake': 'asdsadas'}
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+project 超越项目组
+version 主版本
+play 邵阳字牌
+report_list: <QuerySet []>
+report_list: <QuerySet [<ReportProfile: /home/phonetest/gale/TesterRunner/static/reports>, <ReportProfile: /home/phonetest/gale/TesterRunner/static/reports>, <ReportProfile: /home/phonetest/gale/TesterRunner/static/reports>, <ReportProfile: /home/phonetest/gale/TesterRunner/static/reports>, <ReportProfile: /home/phonetest/gale/TesterRunner/static/reports>]>
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 [{'t_id': 3, 't_method': 'paohuzi', 't_card': '{"1":["1W","1W","1S","4W","5W","6W","5T","5T","7W","7W","7W","9W","9W","7S"], "2":["1S","1S","1S","2S","2S","2S","3S","3S","3S","5S","5S","7S","7S"], "3":["1S","1S","1S","2S","2S","2S","3S","3S","3S","2W","2W","8S","9S"], "4":["1S","1S","1S","2S","2S","2S","3S","3S","3S","8S","8S","5S","6S"],  "5":["8W","5W","7W","8W","3W","3S","9S","9S","9S","3S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S","8S",] }', 't_remark': '3'}]
+11111111111 []
+11111111111 []
+data: {'c_gameMethod': '1213', 'c_gameCard': '213', 'c_remark': '21321'}
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}][30/Jul/2019 05:50:42] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 05:53:59] "GET /deployip/i_list HTTP/1.1" 200 73
+[30/Jul/2019 05:54:00] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 06:09:34] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 06:21:49] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 06:26:14] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 06:26:25] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 06:26:33] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 06:26:40] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 06:41:07] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 06:42:50] "GET /deployip/i_list HTTP/1.1" 200 73
+[30/Jul/2019 06:43:52] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:04:24] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:04:42] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:04:56] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:07:09] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:08:37] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:08:37] "GET /deployip/i_list HTTP/1.1" 200 73
+[30/Jul/2019 07:09:49] "GET /deployip/i_list HTTP/1.1" 200 73
+[30/Jul/2019 07:09:49] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:15:10] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:15:27] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:15:27] "GET /deployip/i_list HTTP/1.1" 200 73
+[30/Jul/2019 07:15:57] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:15:57] "GET /deployip/i_list HTTP/1.1" 200 73
+[30/Jul/2019 07:16:11] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:16:11] "GET /deployip/i_list HTTP/1.1" 200 73
+[30/Jul/2019 07:16:16] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:16:35] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:16:35] "GET /deployip/i_list HTTP/1.1" 200 73
+[30/Jul/2019 07:30:20] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:30:20] "GET /deployip/i_list HTTP/1.1" 200 73
+[30/Jul/2019 07:30:25] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:30:35] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:30:35] "GET /deployip/i_list HTTP/1.1" 200 73
+[30/Jul/2019 07:31:40] "GET /deployip/i_list HTTP/1.1" 200 73
+[30/Jul/2019 07:31:42] "GET /deployip/i_del?t_id=3 HTTP/1.1" 200 2
+[30/Jul/2019 07:31:42] "GET /deployip/i_list HTTP/1.1" 200 2
+[30/Jul/2019 07:31:53] "POST /deployip/i_add HTTP/1.1" 200 12
+[30/Jul/2019 07:31:53] "GET /deployip/i_list HTTP/1.1" 200 70
+[30/Jul/2019 07:31:55] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:31:55] "GET /deployip/i_list HTTP/1.1" 200 70
+[30/Jul/2019 07:32:03] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:32:03] "GET /deployip/i_list HTTP/1.1" 200 70
+[30/Jul/2019 07:35:16] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:35:16] "GET /deployip/i_list HTTP/1.1" 200 70
+[30/Jul/2019 07:35:25] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:35:31] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:35:31] "GET /deployip/i_list HTTP/1.1" 200 70
+[30/Jul/2019 07:35:59] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:35:59] "GET /deployip/i_list HTTP/1.1" 200 70
+[30/Jul/2019 07:40:00] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:40:00] "GET /deployip/i_list HTTP/1.1" 200 70
+[30/Jul/2019 07:40:38] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:40:38] "GET /deployip/i_list HTTP/1.1" 200 70
+[30/Jul/2019 07:41:11] "GET /deployip/i_list HTTP/1.1" 200 70
+[30/Jul/2019 07:41:11] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:43:09] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:43:09] "GET /deployip/i_list HTTP/1.1" 200 70
+[30/Jul/2019 07:46:41] "GET /deployip/i_list HTTP/1.1" 200 70
+
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+1111111111111111111 3
+data: {'c_ip': '192.168.1.111', 'c_port': '80', 'c_remake': ''}
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 07:47:56
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 07:48:51
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+[30/Jul/2019 07:49:35] "GET /deployip/i_list HTTP/1.1" 200 70
+[30/Jul/2019 07:49:40] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:49:40] "GET /deployip/d_list HTTP/1.1" 200 70
+[30/Jul/2019 07:49:42] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:49:42] "GET /deployip/d_list HTTP/1.1" 200 70
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 07:48:58
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+[{'t_id': 4, 't_ip': '192.168.1.111', 't_port': '80', 't_remark': ''}] 11111111111111111111111111111111
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+[{'t_id': 4, 't_ip': '192.168.1.111', 't_port': '80', 't_remark': ''}] 11111111111111111111111111111111
+[30/Jul/2019 07:50:25] "GET /deployip/i_list HTTP/1.1" 200 70
+[30/Jul/2019 07:50:34] "POST /deployip/i_add HTTP/1.1" 200 12
+[30/Jul/2019 07:50:35] "GET /deployip/i_list HTTP/1.1" 200 137
+[30/Jul/2019 07:50:39] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:50:39] "GET /deployip/d_list HTTP/1.1" 200 137
+[30/Jul/2019 07:50:42] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:50:42] "GET /deployip/d_list HTTP/1.1" 200 137
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 07:49:50
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+data: {'c_ip': '192.6.7.23', 'c_port': '80', 'c_remake': ''}
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+[{'t_id': 4, 't_ip': '192.168.1.111', 't_port': '80', 't_remark': ''}, {'t_id': 5, 't_ip': '192.6.7.23', 't_port': '80', 't_remark': ''}] 11111111111111111111111111111111
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+[{'t_id': 4, 't_ip': '192.168.1.111', 't_port': '80', 't_remark': ''}, {'t_id': 5, 't_ip': '192.6.7.23', 't_port': '80', 't_remark': ''}] 11111111111111111111111111111111
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 07:50:49
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+[30/Jul/2019 07:54:02] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:54:02] "GET /deployip/d_list HTTP/1.1" 200 137
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 07:53:56
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+[{'t_id': 4, 't_ip': '192.168.1.111', 't_port': '80', 't_remark': ''}, {'t_id': 5, 't_ip': '192.6.7.23', 't_port': '80', 't_remark': ''}] 9999999999999999
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 07:54:34
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+[30/Jul/2019 07:54:56] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:54:56] "GET /deployip/d_list HTTP/1.1" 200 137
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 07:54:52
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+11111111111 [{'t_id': 9, 't_method': '1213', 't_card': '213', 't_remark': '21321'}]
+['192.168.1.111:80', '192.6.7.23:80'] 9999999999999999
+poll....
+epoll....
+globals: dict_keys(['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', 'ABCMeta', 'abstractmethod', 'namedtuple', 'Mapping', 'math', 'select', 'sys', 'EVENT_READ', 'EVENT_WRITE', '_fileobj_to_fd', 'SelectorKey', '_SelectorMapping', 'BaseSelector', '_BaseSelectorImpl', 'SelectSelector', 'PollSelector', 'EpollSelector'])
+1111
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): addcard.
+Run 'python manage.py migrate' to apply them.
+July 30, 2019 - 07:55:00
+Django version 2.1.1, using settings 'TesterRunner.settings'
+Starting development server at http://0:8000/
+Quit the server with CONTROL-C.
+[30/Jul/2019 07:57:01] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:57:01] "GET /deployip/d_list HTTP/1.1" 200 37
+[30/Jul/2019 07:57:06] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:57:06] "GET /deployip/d_list HTTP/1.1" 200 37
+[30/Jul/2019 07:58:09] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 07:58:09] "GET /deployip/d_list HTTP/1.1" 200 37
+[30/Jul/2019 07:58:26] "GET /deployip/d_list HTTP/1.1" 200 37
+[30/Jul/2019 07:58:26] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 08:00:14] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 08:00:14] "GET /deployip/d_list HTTP/1.1" 200 37
+[30/Jul/2019 08:01:19] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 08:01:19] "GET /deployip/d_list HTTP/1.1" 200 37
+[30/Jul/2019 08:01:28] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 08:01:28] "GET /deployip/d_list HTTP/1.1" 200 37
+[30/Jul/2019 08:01:34] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 08:01:34] "GET /deployip/d_list HTTP/1.1" 200 37
+[30/Jul/2019 08:02:23] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 08:02:23] "GET /deployip/d_list HTTP/1.1" 200 37
+[30/Jul/2019 08:03:01] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 08:03:01] "GET /deployip/d_list HTTP/1.1" 200 37
+[30/Jul/2019 08:04:40] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 08:04:40] "GET /deployip/d_list HTTP/1.1" 200 37
+[30/Jul/2019 08:09:54] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 08:09:54] "GET /deployip/d_list HTTP/1.1" 200 37
+[30/Jul/2019 08:12:27] "GET /deployip/i_list HTTP/1.1" 200 137
+[30/Jul/2019 08:12:32] "GET /deployip/i_del?t_id=5 HTTP/1.1" 200 70
+[30/Jul/2019 08:12:32] "GET /deployip/i_list HTTP/1.1" 200 70
+[30/Jul/2019 08:12:33] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 08:12:33] "GET /deployip/d_list HTTP/1.1" 200 20
+[30/Jul/2019 08:12:36] "GET /deployip/i_list HTTP/1.1" 200 70
+[30/Jul/2019 08:12:59] "POST /deployip/i_add HTTP/1.1" 200 12
+[30/Jul/2019 08:13:00] "GET /deployip/i_list HTTP/1.1" 200 172
+[30/Jul/2019 08:13:02] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 08:13:02] "GET /deployip/d_list HTTP/1.1" 200 42
+[30/Jul/2019 08:13:36] "GET /addcard/c_list HTTP/1.1" 200 71
+[30/Jul/2019 08:13:36] "GET /deployip/d_list HTTP/1.1" 200 42
