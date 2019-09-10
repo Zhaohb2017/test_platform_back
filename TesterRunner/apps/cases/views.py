@@ -11,53 +11,72 @@ from django.views.decorators.http import require_http_methods
 @require_http_methods(['POST'])
 def AddCaseView(request):
     Data = json.loads(request.body)
-    print("data: %s" % Data)
-    _date = Data['c_date']          # 提交日期
-    _name = Data['c_name']          # 提交人
-    _project = Data['c_project']    # 项目组
-    _mid = Data["c_account"]        #用户mid
-    _play = Data['c_play']          # 项目玩法
-    _purpose = Data['c_purpose']    # 测试目的
-    _options = Data['c_options']    # 创房选项
-    _steps = Data['c_steps']        # 操作步骤
-    _remake = Data['c_remake']      # 备注
-    _cards = Data['c_cards']        # 做牌数据
-    _log="addcaseview----->"
-    print("mid___________",type(_mid))
-    print("提交时间,",_date)
-    print(_log + "玩法选项" + "%s"%_options)
-    #   创建测试用例脚本文件
-    file_name = make_test_case_files(_project, _play, _options, _steps, _cards,_mid)
-    if file_name:
-        is_local = 1
-    else:
-        is_local = 0
-    print(1111111111111111111111111)
-    case = CasesProfile(
-        c_date=_date,
-        c_user=_name,
-        c_project=_project,
-        c_purpose=_purpose,
-        c_play=_play,
-        c_cards = _cards,
-        c_option=_options,
-        c_operate=_steps,
-        c_is_local=is_local,
-        c_remake=_remake,
-        c_name=file_name,
-        c_account = _mid ,
-    )
-    case.save()
-    print("1111111111",case.c_operate)
-    print("22222222222",_steps)
-    if case.c_operate == _steps:
-        return HttpResponse('添加成功', content_type="application/json,charset=utf-8")
-    else:
-        return HttpResponse('添加失败', content_type="application/json,charset=utf-8")
+    _mid = None
+    try:
+        print("data: %s" % Data)
+        _date = Data['c_date']  # 提交日期
+        _name = Data['c_name']  # 提交人
+        _project = Data['c_project']  # 项目组
+        _play = Data['c_play']  # 项目玩法
+        _purpose = Data['c_purpose']  # 测试目的
+        _options = Data['c_options']  # 创房选项
+        _steps = Data['c_steps']  # 操作步骤
+        _remake = Data['c_remake']  # 备注
+        _cards = Data['c_cards']  # 做牌数据
+        try:
+            mid = Data["c_account"]  # 用户mid
+            if type(eval(mid)) != list:
+                resp = {"code":300,"Msg":"用户mid错误!请输入例:[127843,127864]"}
+                return HttpResponse(json.dumps(resp), content_type="application/json,charset=utf-8")
+            else:
+                _mid = mid
+                if len(eval(_mid)) != _options["o_player"]:
+                    resp = {"code": 300, "Msg": "用户mid数量和创房选项人数不一致"}
+                    return HttpResponse(json.dumps(resp), content_type="application/json,charset=utf-8")
+                for i in eval(_mid):
+                    if type(i) is not int:
+                        resp = {"code": 300, "Msg": "mid请输入数字类型"}
+                        return HttpResponse(json.dumps(resp), content_type="application/json,charset=utf-8")
+
+        except Exception as err:
+            resp = {"code":300,"Msg":"用户mid错误!请输入例:[127843,123465]"}
+            return HttpResponse(json.dumps(resp), content_type="application/json,charset=utf-8")
+
+        #   创建测试用例脚本文件
+        file_name = make_test_case_files(_project, _play, _options, _steps, _cards, _mid)
+        if file_name:
+            is_local = 1
+        else:
+            is_local = 0
+
+        case = CasesProfile(
+            c_date=_date,
+            c_user=_name,
+            c_project=_project,
+            c_purpose=_purpose,
+            c_play=_play,
+            c_cards=_cards,
+            c_option=_options,
+            c_operate=_steps,
+            c_is_local=is_local,
+            c_remake=_remake,
+            c_name=file_name,
+            c_account=_mid,
+        )
+        case.save()
+
+        if case.c_operate == _steps:
+            return HttpResponse('添加成功', content_type="application/json,charset=utf-8")
+        else:
+            return HttpResponse('添加失败', content_type="application/json,charset=utf-8")
+    except Exception as err:
+        return HttpResponse(err, content_type="application/json,charset=utf-8")
+
 
 
 def GetAllCase():
     case_set = []
+    option_dict = []
     case_list = CasesProfile.objects.all()
     for case in case_list:
         case_set.append({
@@ -97,24 +116,52 @@ def QueryByParams(request):
         project = project + '-' + version  # 数据库中c_project字段值是 project_version拼接起来的
         case_list = CasesProfile.objects.filter(c_project=project, c_play=play)
         case_set = []
-        for case in case_list:
-            case_set.append({
-                'c_id': case.id,
-                'c_date': case.c_date,
-                'c_name': case.c_user,
-                'c_project': case.c_project,
-                'c_purpose': case.c_purpose,
-                'c_play': case.c_play,
-                'c_cards': case.c_cards,
-                'c_option': case.c_option,
-                'c_operate': case.c_operate,
-                'c_is_local': case.c_is_local,
-                'c_remake': case.c_remake,
-                'c_file_name': case.c_name,
-                'isRunning': False,
-                'c_mid':case.c_account,
-            })
-        return JsonResponse(case_set, safe=False)
+        print("FFFF",case_list)
+        option = None
+        if len(case_list) == 0:
+            for case in case_list:
+                case_set.append({
+                    'c_id': case.id,
+                    'c_date': case.c_date,
+                    'c_name': case.c_user,
+                    'c_project': case.c_project,
+                    'c_purpose': case.c_purpose,
+                    'c_play': case.c_play,
+                    'c_cards': case.c_cards,
+                    'c_option': case.c_option,
+                    'c_operate': case.c_operate,
+                    'c_is_local': case.c_is_local,
+                    'c_remake': case.c_remake,
+                    'c_file_name': case.c_name,
+                    'isRunning': False,
+                    'c_mid': case.c_account,
+                })
+            return JsonResponse(case_set, safe=False)
+
+        else:
+            for case in case_list:
+                option = case.c_option
+                print(case)
+                case_set.append({
+                    'c_id': case.id,
+                    'c_date': case.c_date,
+                    'c_name': case.c_user,
+                    'c_project': case.c_project,
+                    'c_purpose': case.c_purpose,
+                    'c_play': case.c_play,
+                    'c_cards': case.c_cards,
+                    'c_option': eval(case.c_option),
+                    'c_operate': eval(case.c_operate),
+                    'c_is_local': case.c_is_local,
+                    'c_remake': case.c_remake,
+                    'c_file_name': case.c_name,
+                    'isRunning': False,
+                    'c_mid': case.c_account,
+                })
+            print(case_set,"FFFFFFFFFFFFFFFFF")
+            return JsonResponse(case_set, safe=False)
+
+
     except Exception as e:
         return HttpResponse(e, content_type="application/json,charset=utf-8")
 
@@ -147,18 +194,22 @@ def QueryByName(request):
 
 def DeleteView(request):
     c_id = request.GET['c_id']
-
-    case = CasesProfile.objects.filter(id=c_id)
-    for c in case:
-        os.remove(c.c_name)
-
-    del_obj = CasesProfile.objects.filter(id=c_id).delete()
-    if del_obj:
-        case_set = GetAllCase()
-        return JsonResponse(case_set, safe=False)
+    try:
+        case = CasesProfile.objects.filter(id=c_id)
+        for c in case:
+            os.remove(c.c_name)
+        ReportProfile.objects.filter(c_case_id_id=c_id).delete()
+        CasesProfile.objects.filter(id=c_id).delete()
+    except FileNotFoundError:
+        ReportProfile.objects.filter(c_case_id_id=c_id).delete()
+        del_obj = CasesProfile.objects.filter(id=c_id).delete()
+        if del_obj:
+            case_set = GetAllCase()
+            return JsonResponse(case_set, safe=False)
+        else:
+            return HttpResponse('删除失败.', content_type="application/json,charset=utf-8")
     else:
-        return HttpResponse('删除失败.', content_type="application/json,charset=utf-8")
-
+        return HttpResponse('删除成功.', content_type="application/json,charset=utf-8")
 
 #   根据id修改bug内容
 @require_http_methods(['POST'])
@@ -171,18 +222,40 @@ def UpdateCase(request):
     _project = Data['c_project']  # 项目组
     _play = Data['c_play']  # 项目玩法
     _purpose = Data['c_purpose']  # 测试目的c_cards
-    option = transform_create_room_options(_play, Data['c_option'])
+    option = Data['c_option']
     _options = option  # 创房选项
     _operate = Data['c_operate']  # 操作步骤
     _remake = Data['c_remake']  # 备注
     _file_name = Data['c_file_name'] # 文件路径
     _is_local = Data['c_is_local']
     _cards = Data['c_cards']    # 做牌数据
-    print("_file_name: %s" % _file_name)
-    print("project: %s, play: %s" % (_project, _play))
-    #   创建测试用例脚本文件
-    file_name = make_test_case_files(_project, _play, _options, _operate, _cards, _file_name)
+    _mids = Data["c_account"]
 
+    try:
+        mid = Data["c_account"]  # 用户mid
+        if type(eval(mid)) != list:
+            resp = {"code": 300, "Msg": "用户mid错误!请输入例:[127843,127864]"}
+            return HttpResponse(json.dumps(resp), content_type="application/json,charset=utf-8")
+        else:
+            _mid = mid
+            if len(eval(_mid)) != _options["o_player"]:
+                resp = {"code": 300, "Msg": "用户mid数量和创房选项人数不一致"}
+                return HttpResponse(json.dumps(resp), content_type="application/json,charset=utf-8")
+
+            for i in eval(_mid):
+                if type(i) is not int:
+                    resp = {"code": 300, "Msg": "mid请输入数字类型"}
+                    return HttpResponse(json.dumps(resp), content_type="application/json,charset=utf-8")
+
+    except Exception as err:
+        resp = {"code": 300, "Msg": "用户mid错误!请输入例:[127843,127864]"}
+        return HttpResponse(json.dumps(resp), content_type="application/json,charset=utf-8")
+
+
+    #   创建测试用例脚本文件
+    file_name = update_test_case_file(_path=_file_name,team=_project, play=_play, options=_options, operates=_operate, cards=_cards,mids=_mids)
+
+    #
     result = CasesProfile.objects.filter(id=_id).update(
         c_date=_date,
         c_user=_name,
@@ -192,14 +265,13 @@ def UpdateCase(request):
         c_cards=_cards,
         c_option=_options,
         c_operate=_operate,
-        c_is_local=_is_local,
         c_remake=_remake,
-        c_name=file_name,
+        c_account=_mids,
     )
-
     if result:
         case_set = GetAllCase()
         return JsonResponse(case_set, safe=False)
+        # return HttpResponse('创建成功', content_type="application/json,charset=utf-8")
     else:
         return HttpResponse('修改失败.', content_type="application/json,charset=utf-8")
 
@@ -215,8 +287,9 @@ def RunView(request):
         report_name = c.c_play + time.strftime("_%Y_%m_%d_%H_%M_%S", time.localtime(time.time())) + '.html'
 
     local_dir_path = file_name.split(file_name.split("/")[-1])[0]
+    if os.path.exists(file_name) is False:
+        return HttpResponse('执行文件不存在', content_type="application/json,charset=utf-8")
     print("Local: %s, 本地文件路径: %s" % (os.path.exists(file_name), file_name))
-
     #   如果本地文件存在
     if file_name != None and os.path.exists(file_name):
         init_path = '/home/phonetest/gale/TesterRunner/runner/run_case.py'
@@ -225,12 +298,7 @@ def RunView(request):
         print("command: %s" % command)
         run_task = subprocess.Popen(command, shell=True)
         stdout = None
-        # stdout, stderr = run_task.communicate()
-        # print("stdout",run_task.returncode)
-        # is_over = run_task.poll()
-        # print("is_over1111111111111111111111111111111111111111111: %s" % is_over)
 
-        #   return_code = {0: "成功"}
         report_path = "/home/phonetest/gale/TesterRunner/static/reports"
 
         is_over = None

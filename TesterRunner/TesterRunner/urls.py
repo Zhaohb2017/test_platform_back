@@ -35,6 +35,9 @@ urlpatterns = [
     path('knowledge/', include('apps.knowledge.urls', namespace='apps.knowledge')),
     path('addcard/', include('apps.addcard.urls', namespace='apps.addcard')),
     path('deployip/', include('apps.deployip.urls', namespace='apps.deployip')),
+    path('club/', include('apps.club.urls', namespace='apps.club')),
+    path('configuration/', include('apps.configuration.urls', namespace='apps.configuration')),
+    path('versions/', include('apps.versions.urls', namespace='apps.versions')),
 
 ]
 

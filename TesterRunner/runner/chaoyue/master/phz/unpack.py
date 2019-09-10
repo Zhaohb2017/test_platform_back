@@ -83,6 +83,49 @@ class DefineProtocol:
     PAO_HU_ZI_SC_SERVER_PUSH_GOD_CARDS = 3040    # 服务器推送神牌 益阳
     PAO_HU_ZI_SC_PLAYER_CAN_DO_YIYANG = 12026   # 益阳玩家能做什么
     PAO_HU_ZI_SC_PUSH_CHOU_CARD_YIYANG = 2030   # 益阳臭牌
+    PAO_HU_ZI_SC_SEND_CARDS_RUNFAST = 5020      #跑得快发牌
+    PAO_HU_ZI_SC_NEXT_USER_OUTCARD = 5021       #跑得快下一个出牌玩家
+    PAO_HU_ZI_SC_USER_OUTCARD = 5023            #跑得快用户出牌
+    PAO_HU_ZI_SC_READY = 5005                   # 跑得快用户准备
+    PAO_HU_ZI_SC_GAMESTART = 5007               # 服务器广播游戏开始
+    PAO_HU_ZI_SC_DISSOLVERUNFAST = 5008         #客户端发起解散房间
+    RUNFAST_REQUEST_LEAVE_ROOM = 5009                    #用户请求离开房间
+    RUNFAST_OPERATION = 5022                        #通知用户做相应的操作
+    RUNFAST_DISSOLVEROOM = 5012
+    RUNFAST_BROADCAST_HAS_BEEN_DISBAND = 5013       # 解散房间服务器应答
+    RUNFAST_SETTLE_ACCOUNTS_SMALL = 5025            # 小局结算
+    RUNFAST_SETTLE_ACCOUNTS_BIG = 5027              # 大局结算
+    MAJIANG_PUSH_PLAYERS_SHAPSHOT = 6002            # 服务器通知进入房间
+    MAJIANG_CLIENT_REQUEST_DISSOLVE = 6008          # 客户端发起解散房间
+    MAJIANG_CLIENT_REQUEST_LEAVE_ROOM = 6009        # 客户端发起解散房间
+    MAJIANG_BROADCAST_HAS_BEEN_DISBAND = 6013       # 解散房间服务器应答
+    MAJIANG_READY = 6005                            # 玩家准备
+    MAJIANG_SERVER_BROADCAST_GAMESTART = 6007       # 服务器广播游戏开始
+    MAJIANG_SERVER_NOTIFY_ON_DEAL = 6023            # 发牌
+    MAJIANG_SERVER_BROADCAST_NEXT_PLAYER = 6025     # 服务器广播下个出牌人
+    MAJIANG_SERVER_NOTIFY_ISTING = 6044             # 服务器通知是否听牌
+    MAJIANG_SERVER_NOTIFY_OPERATE = 6026            # 服务器通知玩家做相应的操作
+    MAJIANG_CLIENT_RESPONSE_DISSOLVE = 6012         # 选择是否解散房间
+    MAJIANG_ACCOUNT_SMALL = 6037                    # 小局结算
+    MAJIANG_ZHA_NIAO = 6036                         # 服务器广播扎码牌
+    MAJIANG_ACCOUNT_BIG = 6038                      # 大局结算
+    MAJIANG_ONPLAY = 6029                           # 出牌数据
+    MAJIANG_ONCANCLE = 6030                         # 取消
+    MAJIANG_ONCHI = 6031                            # 吃牌数据
+    MAJIANG_ONPENG = 6032                           # 碰牌数据
+    MAJIANG_ONGANG = 6033                           # 杠牌数据
+    MAJIANG_ONHU =  6034                            # 胡牌数据
+    MAJIANG_ONBU = 6050                             # 补杠
+    MAJIANG_MOCARD = 6027                           # 服务器通知用户摸牌
+    MAJIANG_PIAOFEN = 6021                         # 飘风
+    MAJIANG_BROADCAST_PIAO = 6020                   # 服务器通知玩家飘分
+    MAJIANG_JIACHUI = 6052                          # 通知客户端锤
+    MAJIANG_CHUI_OPERATION = 6053                   # 锤
+
+
+
+
+
 
 
 #   根据参数数据类型分类
@@ -163,6 +206,43 @@ class ProtocolClassify:
 
                                        1093: [SCInformLessMode, "OnInformLessMode"],
                                        1094: [SCOpenLessMode, "OnOpenLessMode"],
+                                       DefineProtocol.PAO_HU_ZI_SC_SEND_CARDS_RUNFAST: [SCSendCardsRunfast,'sc_runfast_sendCard'],
+                                       DefineProtocol.PAO_HU_ZI_SC_NEXT_USER_OUTCARD: [SCNextUserRunfast,'sc_runfast_nextUser'],
+                                       DefineProtocol.PAO_HU_ZI_SC_USER_OUTCARD: [SCOutCard,"sc_runfast_outcard"],
+                                       DefineProtocol.PAO_HU_ZI_SC_READY: [SCReady,"sc_runfast_ready"],
+                                       DefineProtocol.PAO_HU_ZI_SC_GAMESTART: [SCBroadcastGameStart,'sc_runfast_BroadcastGameStart'],
+                                       DefineProtocol.PAO_HU_ZI_SC_DISSOLVERUNFAST: [SCDissolveRoomFunfast,"sc_runfast_dissolveRoom"],
+                                       DefineProtocol.RUNFAST_OPERATION: [SCRunfastOperation,"sc_runfast_operation"],
+                                       DefineProtocol.RUNFAST_DISSOLVEROOM: [SCRunfastDissolveroom,'sc_runfast_dissolveroomInfo'],
+                                       DefineProtocol.RUNFAST_SETTLE_ACCOUNTS_SMALL: [SCRunfastSettleAccountsSmall,'sc_runfast_settleAccountSmall'],
+                                       DefineProtocol.RUNFAST_BROADCAST_HAS_BEEN_DISBAND: [SCRunfastBeenDisband,'sc_runfast_bennDisband'],
+                                       DefineProtocol.RUNFAST_REQUEST_LEAVE_ROOM: [SCRunfastLeaveRoom,'sc_runfast_leaveRoom'],
+                                       DefineProtocol.RUNFAST_SETTLE_ACCOUNTS_BIG: [SCRunfastSettleAccountsBig,'sc_runfast_settleAccountBig'],
+                                       DefineProtocol.MAJIANG_CLIENT_REQUEST_DISSOLVE: [SCMajiangDissolve,"sc_majiang_dissolve"],
+                                       DefineProtocol.MAJIANG_CLIENT_REQUEST_LEAVE_ROOM: [SCMajiangLeaveRoom,'sc_majiang_leaveRoom'],
+                                       DefineProtocol.MAJIANG_BROADCAST_HAS_BEEN_DISBAND: [SCMajiangBeenDisband,"sc_majiang_beenDisband"],
+                                       DefineProtocol.MAJIANG_READY: [SCMajiangReady,'sc_majiang_ready'],
+                                       DefineProtocol.MAJIANG_SERVER_BROADCAST_GAMESTART: [SCMajiangGameStart,"sc_majiang_gameStart"],
+                                       DefineProtocol.MAJIANG_SERVER_NOTIFY_ON_DEAL: [SCMajiangNotifyOnDeal,"sc_majiang_userCard"],
+                                       DefineProtocol.MAJIANG_SERVER_BROADCAST_NEXT_PLAYER: [SCMajiangNextPlayer,'sc_majiang_nextPlayer'],
+                                       DefineProtocol.MAJIANG_SERVER_NOTIFY_ISTING: [SCMajiangNotifyIsTing,"sc_majiang_ting"],
+                                       DefineProtocol.MAJIANG_SERVER_NOTIFY_OPERATE: [SCMajiangOperate,"sc_majiang_operate"],
+                                       DefineProtocol.MAJIANG_CLIENT_RESPONSE_DISSOLVE: [SCMajiangResponseDissoleve,'sc_majiang_responseDissolve'],
+                                       DefineProtocol.MAJIANG_ACCOUNT_SMALL: [SCMajiangAccountSmall,'sc_majiang_accountSmall'],
+                                       DefineProtocol.MAJIANG_ZHA_NIAO: [SCMajiangZhaMa,'sc_majiang_zhaMa'],
+                                       DefineProtocol.MAJIANG_ACCOUNT_BIG: [SCMajiangAccountBig,'sc_majiang_accountBig'],
+                                       DefineProtocol.MAJIANG_ONPLAY: [SCMajiangOnPlay,"sc_majiang_OnPlay"],
+                                       DefineProtocol.MAJIANG_ONCHI: [SCMajiangOnChi,"sc_majiang_OnChi"],
+                                       DefineProtocol.MAJIANG_ONPENG: [SCMajiangOnPeng,"sc_majiang_OnPeng"],
+                                       DefineProtocol.MAJIANG_ONGANG: [SCMajiangOnGang,"sc_majiang_OnGang"],
+                                       DefineProtocol.MAJIANG_ONHU: [SCMajiangOnHu,"sc_majiang_OnHu"],
+                                       DefineProtocol.MAJIANG_ONCANCLE: [SCMajiangOnCancle,"sc_majiang_OnCancle"],
+                                       DefineProtocol.MAJIANG_MOCARD: [SCMajiangMoCard,"sc_majiang_MoCard"],
+                                       DefineProtocol.MAJIANG_ONBU: [SCMajiangOnBu,"sc_majiang_OnBu"],
+                                       DefineProtocol.MAJIANG_PIAOFEN: [SCMajiangPiaoFen,"sc_majiang_piaofen"],
+                                       DefineProtocol.MAJIANG_BROADCAST_PIAO: [SCMajiangPiao,"sc_majiang_broadcast_piao"],
+                                       DefineProtocol.MAJIANG_JIACHUI:[SCMajiangNotifyJiaChui,"sc_majiang_Notifyjiachui"],
+                                       DefineProtocol.MAJIANG_CHUI_OPERATION: [SCMajiangChui,"sc_majiang_chui"],
                                        }
 
 
@@ -171,9 +251,12 @@ class UnPackData:
     def __init__(self):
         self.current_index = 0
         self.result = None
-        self.normal_entity_list = [1000, 1001, 1004, 1005, 1006, 1008, 1010, 1013, 1014, 1016, 1017, 1019, 1020, 1035,
-                                   1042, 1043, 1053, 1047, 1057, 1086, 1998, 1999, 2001, 2002, 2009, 2010, 2026, 2027,
-                                   2029, 3035, 3040, 10022, 10080, 12026, 2030]
+        self.normal_entity_list = [1000, 1004,1006, 1008, 1010, 1013, 1014, 1016, 1017, 1019, 1020, 1035,
+                                   1042, 1043, 1053, 1047, 1057, 1086, 1998, 1999, 2001, 2002, 2009, 2010, 2026,2027,
+                                   2029, 3035, 3040, 10022, 10080, 12026, 2030,5021,5023,5005,5007,5009,5012,5013,6009,6013,
+                                   6005,6007,6044,6025,6012,6030,6033,6034,6035,6027,6021,6020,6052,6053
+                                   ]
+
 
     def get_protocol_classify(self, protocol_num):
         classify_list = ProtocolClassify.protocol_classify
@@ -218,6 +301,24 @@ class UnPackData:
         entity = protocol_entity()
         entity_data = entity.sc_entity_data
         current_index = 0
+        if protocol_num == 1001:
+            size = self.read_int32(need_parse_data[12: (12 + 4)])
+            game_type = self.read_string(size, need_parse_data[16: 16 + size])
+            self.game_type = game_type
+            if int(game_type[:-1]) in [25,26,28, 27,29,30,31,32,33,34]:
+                for i in entity_data:
+                    if i == "error_code":
+                        entity_data[i][1]  = self.read_int32(need_parse_data[0: (4)])
+                    if i == "timer":
+                        entity_data[i][1] = self.read_int32(need_parse_data[4: (8)])
+                    if i == "seat_id":
+                        entity_data[i][1] = self.read_int32(need_parse_data[8: (8 + 4)])
+            return entity_data
+
+        elif protocol_num == 1005:
+            print("1005协议号数据暂不解析")
+
+
         if protocol_num in self.normal_entity_list:
             for i in entity_data:
                 if len(need_parse_data) <= 0 or len(need_parse_data) - current_index <= 0:
@@ -247,6 +348,74 @@ class UnPackData:
 
                     # if protocol_num == DefineProtocol.PAO_HU_ZI_SC_CREATE_ROOM:  #     entity_data[i][1] = self.read_string(need_parse_data[current_index: current_index + len(str(entity_data[i][1]))])  #     current_index += len(entity_data[i][1])
         else:
+
+            if protocol_num == 2026:
+                print("xxxxxxxxxxxxxxxxx",need_parse_data)
+                for i in entity_data:
+                    if i == "BaiLiuZi":
+                        BaiLiuZi = self.read_int16(need_parse_data[current_index: (current_index + 2)])
+                        current_index += 4
+                        print(BaiLiuZi)
+                    if i == "seat_id":
+                        seat_id = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                        current_index += 4
+                        print(seat_id)
+                    if i == "last_push_card":
+                        name_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                        current_index += 4
+
+                        last_push_card = self.read_string(name_len, need_parse_data[current_index: current_index + name_len])
+                        current_index += name_len
+                        print(last_push_card)
+                    if i == "sure_liu_card":
+
+                        name_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                        current_index += 4
+
+                        sure_liu_card = self.read_string(name_len,
+                                                          need_parse_data[current_index: current_index + name_len])
+                        current_index += name_len
+                        print(sure_liu_card)
+
+                    if i == "sure_chi_card":
+                        name_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                        current_index += 4
+
+                        sure_chi_card = self.read_string(name_len,
+                                                         need_parse_data[current_index: current_index + name_len])
+                        current_index += name_len
+                        print(sure_chi_card)
+
+                    if i =="is_chu_card":
+                        is_chu_card = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                        current_index += 4
+                        print(is_chu_card)
+                    if i == "is_peng_card":
+                        is_peng_card = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                        current_index += 4
+                        print(is_peng_card)
+                    if i == "is_chi_card":
+                        is_chi_card = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                        current_index += 4
+                        print(is_chi_card)
+                    if i == "is_hu_card":
+                        is_hu_card = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                        current_index += 4
+                        print(is_hu_card)
+
+
+
+
+
+            if protocol_num == 5008:
+                for i in entity_data:
+                    if i == "error_code":
+                        err = self.read_int32(need_parse_data[0: (4)])
+                        entity_data[i][1] = err
+
+                # return entity_data
+
+
             if protocol_num == 1002:  # 房间快照
                 for i in entity_data:
                     if i == "_player_info":
@@ -339,6 +508,582 @@ class UnPackData:
                         entity_data[i][1] = self.read_int32(need_parse_data[current_index: (current_index + 4)])
                         current_index += 4
 
+
+            elif protocol_num == 5025:
+                custom_list = []
+                outcard_list = []
+                players_info = {}
+                players_data = {}
+
+                for i in entity_data:
+                    if i == "players_info":
+                        print()
+                        for x in range(entity_data["players_num"]):
+                            seat_id = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            mid = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+
+                            current_index += 4
+
+                            name_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            name = self.read_string(name_len,need_parse_data[current_index: current_index + name_len])
+                            current_index += name_len
+
+                            icon_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            icon = self.read_string(icon_len, need_parse_data[current_index: current_index + icon_len])
+                            current_index += icon_len
+
+                            bomb_num = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            score = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            seat_score = self.read_int64(need_parse_data[current_index: (current_index + 8)])
+                            current_index += 8
+
+                            hand_cards_num = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            if hand_cards_num != 0:
+                                for i in range(hand_cards_num):
+                                    card_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                    current_index += 4
+                                    card = self.read_string(card_len,need_parse_data[current_index: current_index + card_len])
+                                    current_index += card_len
+                                    custom_list.append(card)
+
+                            outcard_num = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            if outcard_num != 0:
+                                for i in range(outcard_num):
+                                    card_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                    current_index += 4
+                                    card = self.read_string(card_len,
+                                                            need_parse_data[current_index: current_index + card_len])
+                                    current_index += card_len
+                                    outcard_list.append(card)
+
+                            players_data["seat_id"] = seat_id
+                            players_data["mid"] = mid
+                            players_data["name"] = name
+                            players_data["icon"] = icon
+                            players_data["bomb_num"] = bomb_num
+                            players_data["score"] = score
+                            players_data["seat_score"] = seat_score
+                            players_data["hand_cards_num"] = hand_cards_num
+                            players_data["hand_cards"] = custom_list
+                            players_data["outcard_num"] = outcard_num
+                            players_data["outcard_list"] = outcard_list
+                            players_info["%s"%x] = players_data
+                        entity_data['players_info'][1] = players_info
+
+                    elif i == "cards_info":
+                        info_list = []
+                        if entity_data["cards_remaining_num"] is not 0:
+                            for x in range(entity_data["cards_remaining_num"]):
+                                card_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                current_index += 4
+                                card = self.read_string(card_len,need_parse_data[current_index: current_index + card_len])
+                                current_index += card_len
+                                info_list.append(card)
+                        entity_data[i][1] = info_list
+
+                    else:
+                        if entity_data[i][0] == "INT32":
+                            if len(need_parse_data) - current_index < 4:
+                                break
+                            entity_data[i] = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                        elif entity_data[i][0] == "STRING":
+                            size = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            entity_data[i] = self.read_string(size,need_parse_data[current_index: current_index + size])
+                            current_index += size
+
+            elif protocol_num == 5027 :
+                players_data = {}
+                players_info = {}
+                for i in entity_data:
+                    if i == "Playing_info":
+                        for x in range(entity_data["Playing_num"]):
+                            seat_id = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            mid = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+
+                            current_index += 4
+
+                            name_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            name = self.read_string(name_len,need_parse_data[current_index: current_index + name_len])
+                            current_index += name_len
+
+                            icon_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            icon = self.read_string(icon_len, need_parse_data[current_index: current_index + icon_len])
+                            current_index += icon_len
+
+                            seat_score = self.read_int64(need_parse_data[current_index: (current_index + 8)])
+                            current_index += 8
+
+                            bomb_num = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            win_num = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            lose_num = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            top_score = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+
+                            players_data["seat_id"] = seat_id
+                            players_data["mid"] = mid
+                            players_data["name"] = name
+                            players_data["icon"] = icon
+                            players_data["seat_score"] = seat_score
+                            players_data["bomb_num"] = bomb_num
+                            players_data["win_num"] = win_num
+                            players_data["lose_num"] = lose_num
+                            players_data["top_score"] = top_score
+                            players_info["%s"%x] = players_data
+                        entity_data['Playing_info'][1] = players_info
+
+                    elif i == "dissolveTypeInfo":
+                        dissolveTypeInfo_list = {}
+                        if entity_data["dissolveType"] is not 0:
+                            user_num = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            for x in range(user_num):
+                                seat_id = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                current_index += 4
+                                dissolve_type = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                current_index += 4
+                                dissolveTypeInfo_list['seat_id'] = seat_id
+                                dissolveTypeInfo_list['dissolve_type'] = dissolve_type
+
+                        entity_data['dissolveTypeInfo'][1] = dissolveTypeInfo_list
+
+                    else:
+                        if entity_data[i][0] == "INT32":
+                            if len(need_parse_data) - current_index < 4:
+                                break
+                            entity_data[i] = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                        elif entity_data[i][0] == "STRING":
+                            size = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            entity_data[i] = self.read_string(size,need_parse_data[current_index: current_index + size])
+                            current_index += size
+
+            elif protocol_num == 6050:
+                for i in entity_data:
+                    if i == "ErrorCode":
+                        seat_id = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                        current_index += 4
+                        entity_data["ErrorCode"] = seat_id
+                    else:
+                        if entity_data["ErrorCode"] in [1,2,3,4]:
+                            if entity_data[i][0] == "INT32":
+                                if len(need_parse_data) - current_index < 4:
+                                    break
+                                entity_data[i] = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                current_index += 4
+
+                            elif entity_data[i][0] == "STRING":
+                                size = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                current_index += 4
+                                entity_data[i] = self.read_string(size,
+                                                                  need_parse_data[current_index: current_index + size])
+                                current_index += size
+
+
+
+
+
+
+
+            elif protocol_num == 6037:
+                hu_users_list = []
+                Operation_cards_list = []
+                hand_card_list = []
+                mingtang_list = []
+                players_info = {}
+
+                for i in entity_data:
+                    if i == "hu_player_seat_id":
+                        for x in range(entity_data["hu_player_num"]):
+                            seat_id = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            hu_users_list.append(seat_id)
+                        entity_data["hu_player_seat_id"] = hu_users_list
+
+                    elif i == "players_info":
+                        for x in range(entity_data["players_num"]):
+                            players_data = {}
+                            seat_id = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            mid = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+
+                            current_index += 4
+
+                            name_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            name = self.read_string(name_len, need_parse_data[current_index: current_index + name_len])
+                            current_index += name_len
+
+
+                            score = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            seat_score = self.read_int64(need_parse_data[current_index: (current_index + 8)])
+                            current_index += 8
+
+                            hucard_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            hu_cards = self.read_string(hucard_len, need_parse_data[current_index: current_index + hucard_len])
+                            current_index += hucard_len
+
+                            Operation_cards_num = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            if Operation_cards_num != 0:
+                                Operation_cards_dict = {}
+                                for i in range(Operation_cards_num):
+                                    card_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                    current_index += 4
+                                    card = self.read_string(card_len,need_parse_data[current_index: current_index + card_len])
+                                    current_index += card_len
+
+                                    OperationType = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                    current_index += 4
+                                    Operation_cards_dict['card'] = card
+                                    Operation_cards_dict['OperationType'] = OperationType
+                                Operation_cards_list.append(Operation_cards_dict)
+
+
+                            hand_card_num = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            if hand_card_num != 0:
+                                for i in range(hand_card_num):
+                                    card_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                    current_index += 4
+                                    card = self.read_string(card_len,
+                                                            need_parse_data[current_index: current_index + card_len])
+                                    current_index += card_len
+                                    hand_card_list.append(card)
+
+                            mingtang_num = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            if mingtang_num != 0:
+                                mingtang_dict = {}
+                                for i in range(mingtang_num):
+                                    MingTangType = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                    current_index += 4
+
+                                    MingTang_Num = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                    current_index += 4
+                                    mingtang_dict['MingTangType'] = MingTangType
+                                    mingtang_dict['MingTang_Num'] = MingTang_Num
+                                mingtang_list.append(mingtang_dict)
+
+                            players_data["seat_id"] = seat_id
+                            players_data["mid"] = mid
+                            players_data["name"] = name
+                            players_data["score"] = score
+                            players_data["seat_score"] = seat_score
+                            players_data["hu_cards"] = hu_cards
+                            players_data["Operation_cards_num"] = Operation_cards_num
+                            players_data["Operation_cards_list"] = Operation_cards_list
+                            players_data["hand_card_num"] = hand_card_num
+                            players_data["hand_card_list"] = hand_card_list
+                            players_data["mingtang_num"] = mingtang_num
+                            players_data["mingtang_list"] = mingtang_list
+                            players_info["%s" % x] = players_data
+
+                        entity_data['players_info'][1] = players_info
+
+                    elif i == "zhaoMa_card":
+                        info_list = []
+                        if entity_data["zhaoMa_num"] is not 0:
+                            for x in range(entity_data["zhaoMa_num"]):
+                                card_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                current_index += 4
+                                card = self.read_string(card_len,
+                                                        need_parse_data[current_index: current_index + card_len])
+                                current_index += card_len
+                                info_list.append(card)
+                        entity_data["zhaoMa_card"] = info_list
+                    elif i == "zhongMa_players_info":
+                        info_list = []
+                        info_dict = {}
+                        users_num = {}
+                        if entity_data["zhongMa_players_num"] is not 0:
+                            for x in range(entity_data["zhongMa_players_num"]):
+                                seat_ID = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                current_index += 4
+
+                                zhongMa_num = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                current_index += 4
+                                card_list = []
+                                if zhongMa_num is not 0:
+                                    for z in range(zhongMa_num):
+                                        card_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                        current_index += 4
+                                        card = self.read_string(card_len,
+                                                                need_parse_data[
+                                                                current_index: current_index + card_len])
+                                        current_index += card_len
+                                        card_list.append(card)
+                                info_dict["seat_ID"] = seat_ID
+                                info_dict["zhongMa_num"] = zhongMa_num
+                                info_dict["zhongMa_card"] = card_list
+                                users_num["%s"%i] = info_dict
+                            info_list.append(users_num)
+
+                        entity_data["zhongMa_players_info"] = info_list
+
+                    else:
+                        if entity_data[i][0] == "INT32":
+                            if len(need_parse_data) - current_index < 4:
+                                break
+                            entity_data[i] = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                        elif entity_data[i][0] == "STRING":
+                            size = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            entity_data[i] = self.read_string(size,
+                                                              need_parse_data[current_index: current_index + size])
+                            current_index += size
+
+
+            elif protocol_num == 6038:
+                for i in entity_data:
+                    if i == "dissolveTypeInfo":
+
+                        user_info = {}
+                        if entity_data["dissolveType"] is not 0:
+                            for x in range(entity_data["Playing_num"]):
+                                info_dict = {}
+                                seat_ID = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                current_index += 4
+                                dissolve_type = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                current_index += 4
+                                info_dict['seat_ID'] = seat_ID
+                                info_dict['dissolve_type'] = dissolve_type
+                                user_info['%s'%x] = info_dict
+                        entity_data["dissolveTypeInfo"] = user_info
+                    else:
+                        if entity_data[i][0] == "INT32":
+                            if len(need_parse_data) - current_index < 4:
+                                break
+                            entity_data[i] = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                        elif entity_data[i][0] == "STRING":
+                            size = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            entity_data[i] = self.read_string(size,
+                                                              need_parse_data[current_index: current_index + size])
+                            current_index += size
+
+            elif protocol_num == 6029:
+                for i in entity_data:
+                    if i == "Error":
+                        Error = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                        current_index += 4
+                        entity_data['Error'][1] = Error
+                    if i == "Card":
+                        if entity_data['Error'][1] in [1,2,3,4]:
+                            card_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            card = self.read_string(card_len,
+                                                    need_parse_data[
+                                                    current_index: current_index + card_len])
+                            current_index += card_len
+                            entity_data['Card'][1] = card
+
+            elif protocol_num == 6031:
+                for i in entity_data:
+                    if i == "Error":
+                        Error = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                        current_index += 4
+                        entity_data['Error'][1] = Error
+                    if i == "Card":
+                        if entity_data['Error'][1] in [1,2,3,4]:
+                            card_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            card = self.read_string(card_len,
+                                                    need_parse_data[
+                                                    current_index: current_index + card_len])
+                            current_index += card_len
+                            entity_data['Card'][1] = card
+
+            elif protocol_num == 6032:
+                for i in entity_data:
+                    if i == "Error":
+                        Error = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                        current_index += 4
+                        entity_data['Error'][1] = Error
+
+                    elif i == "by_peng_seat_id":
+                        if entity_data['Error'][1] in [1, 2, 3, 4]:
+                            seat_id = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            entity_data['by_peng_seat_id'][1] = seat_id
+
+
+                    elif i == "by_card":
+                        if entity_data['Error'][1] in [1,2,3,4]:
+                            card_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            card = self.read_string(card_len,
+                                                    need_parse_data[
+                                                    current_index: current_index + card_len])
+                            current_index += card_len
+                            entity_data['by_card'][1] = card
+
+
+
+
+            elif protocol_num == 6008:
+                players_data = {}
+                players_info = {}
+                for i in entity_data:
+                    if i == "player_info":
+                        for x in range(entity_data["player_num"]):
+                            seat_id = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            mid = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            players_data["seat_id"] = seat_id
+                            players_data["mid"] = mid
+                            players_info["%s" % x] = players_data
+                        entity_data['player_info'][1] = players_info
+
+
+                    else:
+                        if entity_data[i][0] == "INT32":
+                            if len(need_parse_data) - current_index < 4:
+                                break
+                            entity_data[i] = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                        elif entity_data[i][0] == "STRING":
+                            size = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            entity_data[i] = self.read_string(size,
+                                                              need_parse_data[current_index: current_index + size])
+                            current_index += size
+
+
+            elif protocol_num == 6023:
+                cards = []
+                for i in entity_data:
+                    if i == "hand_cards":
+                        for x in range(entity_data["hand_card_num"]):
+                            size = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            card = self.read_string(size,need_parse_data[current_index: current_index + size])
+                            current_index += size
+                            cards.append(card)
+                        entity_data['hand_cards'][1] = cards
+                    else:
+                        if entity_data[i][0] == "INT32":
+                            if len(need_parse_data) - current_index < 4:
+                                break
+                            entity_data[i] = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+
+            elif protocol_num == 6036:
+                cards = []
+                for i in entity_data:
+                    if i == "zhaMa_card":
+                        if entity_data["zhaMa_num"] is not 0:
+                            for x in range(entity_data["zhaMa_num"]):
+                                size = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                current_index += 4
+                                card = self.read_string(size, need_parse_data[current_index: current_index + size])
+                                current_index += size
+                                cards.append(card)
+                            entity_data['zhaMa_card'] = cards
+
+                    elif i == "zhongMa_players_info":
+                        info_list = []
+                        info_dict = {}
+                        users_num = {}
+                        if entity_data["zhongMa_players_num"] is not 0:
+                            for x in range(entity_data["zhongMa_players_num"]):
+                                seat_ID = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                current_index += 4
+
+                                zhongMa_num = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                current_index += 4
+                                card_list = []
+                                if zhongMa_num is not 0:
+                                    for z in range(zhongMa_num):
+                                        card_len = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                                        current_index += 4
+                                        card = self.read_string(card_len,
+                                                                need_parse_data[
+                                                                current_index: current_index + card_len])
+                                        current_index += card_len
+                                        card_list.append(card)
+                                info_dict["seat_ID"] = seat_ID
+                                info_dict["zhongMa_num"] = zhongMa_num
+                                info_dict["zhongMa_card"] = card_list
+                                users_num["%s" % i] = info_dict
+                            info_list.append(users_num)
+
+                        entity_data["zhongMa_players_info"] = info_list
+
+                    else:
+                        if entity_data[i][0] == "INT32":
+                            if len(need_parse_data) - current_index < 4:
+                                break
+                            entity_data[i] = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+
+            elif protocol_num == 6026:
+                cards = []
+                for i in entity_data:
+                    if i == "operate_type_info":
+                        for x in range(entity_data["operate_type_num"]):
+                            OperationTypeID = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            cards.append(OperationTypeID)
+                        entity_data['operate_type_info'][1] = cards
+                    else:
+                        if entity_data[i][0] == "INT32":
+                            if len(need_parse_data) - current_index < 4:
+                                break
+                            entity_data[i] = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                        elif entity_data[i][0] == "STRING":
+                            size = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            entity_data[i] = self.read_string(size,
+                                                              need_parse_data[current_index: current_index + size])
+                            current_index += size
+
+
             elif protocol_num == 1011:  # 发牌
                 range_num = 0
                 for i in entity_data:
@@ -358,6 +1103,75 @@ class UnPackData:
                             card_list.append(card)
                             current_index += size
                         entity_data[i][1] = card_list
+
+            elif protocol_num == 5008:
+                for i in entity_data:
+                    if i == "error_code":
+                        err = self.read_int32(need_parse_data[0: (4)])
+                        entity_data[i][1] = err
+
+            elif protocol_num == 5022:
+                custom_list = []
+                for i in entity_data:
+                    if i == "Operation_num":
+                        operation_num = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                        current_index += 4
+                        entity_data[i][1] = operation_num
+
+
+                    elif i == "Operation_info":
+                        for x in range(entity_data["Operation_num"][1]):
+                            operation_id = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            custom_list.append(operation_id)
+                        entity_data[i][1] = custom_list
+
+                    else:
+                        if entity_data[i][0] == "INT32":
+                            if len(need_parse_data) - current_index < 4:
+                                break
+                            entity_data[i] = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                        elif entity_data[i][0] == "STRING":
+                            size = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+
+                            entity_data[i] = self.read_string(size,
+                                                                 need_parse_data[current_index: current_index + size])
+                            current_index += size
+
+
+
+            elif protocol_num == 5020:  # 跑得快发牌
+                range_num = 0
+                for i in entity_data:
+                    if i == "card_num":
+                        if entity_data[i][0] == "INT32":
+                            if len(need_parse_data) - current_index < 4:
+                                break
+                            entity_data[i][1] = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            range_num = entity_data[i][1]
+                            current_index += 4
+
+
+                    elif i == "card_lists":
+                        card_list = []
+                        for j in range(range_num):
+                            size = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                            current_index += 4
+                            card = self.read_string(size, need_parse_data[current_index: current_index + size])
+                            card_list.append(card)
+                            current_index += size
+                        entity_data[i][1] = card_list
+
+
+                    elif i == "banker_id":
+                        bankerID = self.read_int32(need_parse_data[current_index: (current_index + 4)])
+                        current_index += 4
+                        entity_data[i][1] = bankerID
+
+
 
             elif protocol_num == 1012:  # 请求操作返回
                 # print("1012: %s" % data)

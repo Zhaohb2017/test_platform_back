@@ -8,5 +8,6 @@ urlpatterns = [
     path('c_list', views.QueryAllCard),
     path('search', views.Search),
     path('c_del', views.DeleteView),
+    path('send_room', views.putCardInTheRoom),
 
 ]

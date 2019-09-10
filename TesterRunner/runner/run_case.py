@@ -11,15 +11,16 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 
 # 用例路径
-case_path = os.path.join(os.getcwd(), "TesterRunner/runner/testcases/")#PHZEmptyCardCheckout#ThreeTiFiveKan#AllScoreCheckout
-print(case_path)
+case_path = os.path.join(os.getcwd(), "/home/phonetest/gale/TesterRunner/runner/testcases/")
+
 # 报告存放路径
 report_path = os.path.join(os.getcwd(), '/home/phonetest/gale/TesterRunner/static/reports/')
 print (report_path)
 
 def all_case(_pattern):
+    print("testCase-------------path",case_path)
     discover = unittest.defaultTestLoader.discover(case_path, pattern=_pattern, top_level_dir=None)
-    print ("aaa: %s" % discover)
+    print ("@@@@@@@@@@@@@@@@@@@@@@@: %s" % discover)
     return (discover)
 
 #格式化邮箱地址、名称
@@ -76,6 +77,7 @@ if __name__ == '__main__':
     fp = open(report_abspath, "wb")
     runner = HTMLTestRunnerEN.HTMLTestRunner(stream=fp, title=report_title, description=u'用例执行情况, 详细请点各用例Detail：')
     # 4、调用add_case函数返回值
+    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     runner.run(all_case(_file))
     fp.close()
 

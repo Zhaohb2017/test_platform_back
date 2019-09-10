@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'apps.knowledge',
     'apps.addcard',
     "apps.deployip",
+    "apps.club",
+    "apps.configuration",
+    "apps.versions",
 ]
 
 MIDDLEWARE = [
@@ -92,13 +95,14 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'trdb',
+        'NAME': 'backup_db',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
+        'HOST': '192.168.3.32',
         'PORT': '3306'
     }
 }
+
 
 
 # Password validation
@@ -139,4 +143,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/reports')
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/img')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/img')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')     #设置静态文件路径为主目录下的media文件夹

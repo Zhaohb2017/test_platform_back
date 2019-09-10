@@ -7,6 +7,9 @@ urlpatterns = [
     path('i_add', views.AddDeployIP),
     path('i_list', views.QueryList),
     path('i_del', views.DeleteView),
-    path('d_list', views.GetIPList),  #获取配置ip
+    path('search', views.Search),
+    path('send', views.Send),
+
+
 
 ]

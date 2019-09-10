@@ -12,6 +12,7 @@ import asyncio
 import socket
 import struct
 from threading import Thread
+from runner.logger import *
 
 def printRecvData(_data, align=8):
     print("pack total length is ", len(_data))
@@ -150,8 +151,10 @@ class Connecter(asyncio.Protocol):
                     self.recvBuffer = self.recvBuffer[self.pack_head_length + self.cur_packet_len:]
                     self.cur_packet_len = 0
                     if self.protocol_num is not None:
+                        send_thread = Thread(target=self.on_protocol_handle, args=(self.protocol_num, body_data))
+                        send_thread.start()
                         #   转发数据做处理
-                        self.on_protocol_handle(self.protocol_num, body_data)
+                        # print("self.protocol_num: %s, body_data: %s, %s" % (self.protocol_num, body_data, len(body_data)))
 
     #   连接中断标志
     def connection_lost(self, exc):

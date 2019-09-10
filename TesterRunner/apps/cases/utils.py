@@ -9,7 +9,7 @@
 """
 import os
 import time
-import logging
+from runner.logger import *
 
 
 def _log(str,*args):
@@ -78,7 +78,16 @@ def transform_play(team, play):
         "益阳歪胡子":"yywhz",
         "长沙跑胡子":"ccphz",
         "四六八红拐弯":"slbhgw",
-        "余干麻将": "ygmj"
+        "余干麻将": "ygmj",
+        "跑得快15张":"runfast15",
+        "跑得快16张": "runfast16",
+        "红中麻将": "hzmj",
+        '长沙麻将':'csmj',
+        '转转麻将':"zzmj",
+        '衡阳麻将':'hymj',
+        '新宁麻将':'xnmj',
+        '邵阳麻将':"symj",
+        '靖州麻将':'jzmj',
     }
     try:
         return TeamData[team] + PlayData[play]
@@ -89,29 +98,33 @@ def transform_play(team, play):
 
 #   创建测试脚本文件
 def make_test_case_files(team, play, options, operates, cards,mids, _path=None):
-    print("项目组: %s%s" % (team, play))
-    print("mids____:",mids)
+    print("操作步骤: %s"%operates)
     file_name_prefix=transform_play(team, play)
-    print("文件名前缀: %s" % file_name_prefix)
-    print("当前文件路径: %s" % get_current_path())
+    # print("文件名前缀: %s" % file_name_prefix)
+    # print("当前文件路径: %s" % get_current_path())
     #   如果是编辑文件的话，先删除之前文件
     if _path != None and os.path.exists(_path):
         print("先删除之前文件.")
         os.remove(_path)
-
     #   生成文件路径
     generate_file_path = get_current_path() + '/TesterRunner/runner/testcases/'
-    print("generate_file_path: %s" % generate_file_path)
+    # print("generate_file_path: %s" % generate_file_path)
     import datetime
-    print("当前时间: %s" % time.strftime('%Y_%m_%d_%H_%M_%S', time.localtime(time.time())))
-    print("当前时间2: %s" % datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    # print("当前时间: %s" % time.strftime('%Y_%m_%d_%H_%M_%S', time.localtime(time.time())))
+    # print("当前时间2: %s" % datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     #   文件名字包含路径
     file_name = '%s_%s.py' % (file_name_prefix, time.strftime('%Y_%m_%d_%H_%M', time.localtime(time.time())))
-    print("文件名: %s" % file_name)
 
     write_file(generate_file_path + file_name, team, play, options, operates, cards,mids)
 
     return generate_file_path + file_name
+
+
+
+def update_test_case_file(_path,team, play, options, operates, cards,mids):
+    write_file(_path,team, play, options, operates, cards,mids)
+
+
 
 
 #   生成py脚本文件
@@ -120,243 +133,299 @@ def write_file(_path, team, play, options, operates, cards,mids):
                "    unittest.main()"
     head_code, fixed_code, disconnect_code, operate_code = script_custom_made(team, play, options, operates, cards,mids)
     try:
-        with open(_path, 'a', encoding='utf-8') as f2:
-            f2.write(head_code)
-            f2.write(fixed_code)
+        with open(_path, 'w', encoding='utf-8') as file:
+            file.write(head_code)
+            file.write(fixed_code)
             for code in operate_code:
-                f2.write(code)
-            f2.write(disconnect_code)
-            f2.write(end_code)
+                file.write(code)
+            file.write(disconnect_code)
+            file.write(end_code)
     except Exception as e:
+        logging.info(e)
         print("in utils.py write_file. 文件写入错误。 <%s> " % _path)
     finally:
-        f2.close()
+        file.close()
 
 
 # 按照不同项目进行脚本定制化
 def script_custom_made(team, play, options, operates, cards,mids):
-    print("team",team)
-    print("play",play)
-    print("options",options)
-    print("operates,",operates)
-    print("cards",cards)
+    logging.info("options %s" % operates)
     TeamTransform = {
         "超越项目组-主版本": chaoyue_master_transform,
         # "超越项目组-岳阳版本": chaoyue_yueyang_transform,
         # "巨浪项目组-湖南麻将版本": julang_hunan_transform,
         #"开心游戏项目组-开心游戏版本": kaixinyouxi_kaixinyouxi_transform,
-        "开心游戏项目组-鄱余万版本": kaixinyouxi_poyuwan_transform,
+        # "开心游戏项目组-鄱余万版本": kaixinyouxi_poyuwan_transform,
         #"开心游戏项目组-鹰眼玩法版本": kaixinyouxi_kaixinyouxi_transform,
     }
-    print("1111111111111111111",TeamTransform[team](play, options, operates, cards,mids))
     try:
         return TeamTransform[team](play, options, operates, cards,mids)
     except Exception as e:
-        print('无法找到对应的项目.')
+        logging.info('err: {err} (无法找到对应的项目)'.format(err=e))
 
 
 # 超越项目组脚本定制
 def chaoyue_master_transform(play, options, operates, cards,mids):
     # 修改头部导包数据
+    try:
+        phz_api_import_data = {
+            "邵阳字牌",
+            "邵阳剥皮",
+            "耒阳字牌",
+            "娄底放炮罚",
+            "湘乡告胡子",
+            "衡阳百胡",
+            "郴州字牌",
+            "衡阳六胡抢",
+            "邵阳放炮罚",
+            "衡阳十胡卡",
+            "攸县碰胡子",
+            "常德跑胡子",
+            "怀化红拐弯",
+            "永丰跑胡子",
+            "祁东十五胡",
+            "益阳歪胡子",
+            "长沙跑胡子",
+            "四六八红拐弯",
+            "红中麻将",
+            "跑得快15张",
+            "跑得快16张",
+            "长沙麻将",
+            "红中麻将",
+            "转转麻将",
+            "衡阳麻将",
+            "新宁麻将",
+            "邵阳麻将",
+            "靖州麻将",
 
-    phz_api_import_data = {
-        "邵阳字牌",
-        "邵阳剥皮",
-        "耒阳字牌",
-        "娄底放炮罚",
-        "湘乡告胡子",
-        "衡阳百胡",
-        "郴州字牌",
-        "衡阳六胡抢",
-        "邵阳放炮罚",
-        "衡阳十胡卡",
-        "攸县碰胡子",
-        "常德跑胡子",
-        "怀化红拐弯",
-        "永丰跑胡子",
-        "祁东十五胡",
-        "益阳歪胡子",
-        "长沙跑胡子",
-        "四六八红拐弯",
-
-    }
-    import_data = None
-    if play in phz_api_import_data:
-        import_data = "from chaoyue.master.phz.api import *"
-    if import_data is None:
-        print("脚本定制: 导包失败.")
-        return
-    head_code = 'import sys\n' \
-                'import os\n' \
-                'cur_path = os.path.abspath(os.path.dirname(__file__))\n' \
-                'last_path = os.path.split(cur_path)[0]\n' \
-                'last_path_len = last_path.split("/")[-1]\n' \
-                'root_path = last_path[:len(last_path) - len(last_path_len)]\n' \
-                'sys.path.append(root_path)\n' \
-                'import time\n' \
-                'import unittest\n' \
-                '%s\n' \
-                'class PHZTestCase(unittest.TestCase):\n' \
-                '    def test_task(self):\n' % (import_data)
-    # 修改fixed_code, 创房选项等
-    fixed_code, disconnect_code = transform_fixed_data(options, play, cards,mids)
-    # 修改操作数据，operate_code
-    operate_data = operates.split('\n')
-    operate_code = transform_operate_data(operate_data)
-    return head_code, fixed_code, disconnect_code, operate_code
+        }
+        import_data = None
+        if play in phz_api_import_data:
+            import_data = "from chaoyue.master.phz.api import *"
+        if import_data is None:
+            logging.info("脚本定制: 导包失败.")
+            return
+        head_code = 'import sys\n' \
+                    'import os\n' \
+                    'cur_path = os.path.abspath(os.path.dirname(__file__))\n' \
+                    'last_path = os.path.split(cur_path)[0]\n' \
+                    'last_path_len = last_path.split("/")[-1]\n' \
+                    'root_path = last_path[:len(last_path) - len(last_path_len)]\n' \
+                    'sys.path.append(root_path)\n' \
+                    'import time\n' \
+                    'import unittest\n' \
+                    '%s\n' \
+                    'class PHZTestCase(unittest.TestCase):\n' \
+                    '    def test_task(self):\n' % (import_data)
+        # 修改fixed_code, 创房选项等
+        fixed_code, disconnect_code = transform_fixed_data(options, play, cards, mids)
+        logging.info("fixed_code: {}, disconnect_code: {}".format(fixed_code,disconnect_code))
+        # 修改操作数据，operate_code
+        operate_code = transform_operate_data(play,operates)
+        return head_code, fixed_code, disconnect_code, operate_code
+    except Exception as err:
+        logging.info(err)
 
 
-# 开心游戏项目组脚本定制
-def kaixinyouxi_poyuwan_transform(play, options, operates, cards):
-    # 修改头部导包数据
-    kaixinyouxiteam_api_import_data = {
-        "余干麻将"
-    }
-    import_data = None
-    if play in kaixinyouxiteam_api_import_data:
-        import_data = "from ..kaixinyouxiteam.poyuwan.majhong.api import *"
-    if import_data is None:
-        print("脚本定制: 导包失败.")
-        return
-    head_code = 'import sys\n' \
-                'import os\n' \
-                'cur_path = os.path.abspath(os.path.dirname(__file__))\n' \
-                'last_path = os.path.split(cur_path)[0]\n' \
-                'last_path_len = last_path.split("/")[-1]\n' \
-                'root_path = last_path[:len(last_path) - len(last_path_len)]\n' \
-                'sys.path.append(root_path)\n' \
-                'import time\n' \
-                'import unittest\n' \
-                '%s\n' \
-                'class MaJhongTestCase(unittest.TestCase):\n' \
-                '    def test_task(self):\n' % (import_data)
-    # 修改fixed_code, 创房选项等
-    fixed_code, disconnect_code = transform_fixed_data(options, play, cards)
-    # 修改操作数据，operate_code
-    operate_data = operates.split('\n')
-    operate_code = transform_operate_data(operate_data)
-    return head_code, fixed_code, disconnect_code, operate_code
 
 
 # 将创房选项进行转换
 def transform_fixed_data(options, play, cards,mids):
-    print("创房选项: mids,",mids)
-    users = eval(mids)
-    user_mid = []
-    for i in users:
-        user_mid.append(int(i))
-    print("创房选项options",options)
+    MajiangGameNameList = ["长沙麻将", "红中麻将", "转转麻将", "衡阳麻将", '新宁麻将', '邵阳麻将', '靖州麻将']
+    try:
+        logging.info("options: %s\n, play: %s\n,card: %s\n , mids: %s \n" % (options, play,cards,mids))
+        users = eval(mids)
+        user_mid = []
+        create_key = None
+        join_romm_type = 0
+        if play == "耒阳字牌":
+            create_key = "CreateRoomLeiYang(create_room_data)"
+        elif play == "益阳歪胡子":
+            create_key = "CreateRoomYiYang(create_room_data)"
+        else:
+            create_key = "CreateRoom(create_room_data)"
 
-    if 'o_player' in options:
-        player_num = options['o_player']
-    else:
-        player_num = options['人数']
+        for i in users:
+            user_mid.append(int(i))
+        if 'o_player' in options:
+            player_num = options['o_player']
+        else:
+            player_num = options['人数']
 
-    print("options: %s, play: %s" % (options, play))
+        if options["roomTypeVuale"] == "俱乐部创房":
+            join_romm_type = 1
 
-    if player_num == 4:
-        fixed_code = '        player1 = UserBehavior(%d, True)\n' \
-                     '        player2 = UserBehavior(%d)\n' \
-                     '        player3 = UserBehavior(%d)\n' \
-                     '        player4 = UserBehavior(%d)\n' \
-                     '        time.sleep(2)\n' \
-                     '        player1.SetGameType = "%s"\n' \
-                     '        create_room_data = %s\n' \
-                     '        player1.CreateRoom(create_room_data)\n' \
-                     '        time.sleep(2)\n' \
-                     '        cards_data = %s\n' \
-                     '        player1.MakeCards(cards_data)\n' \
-                     '        time.sleep(2)\n' \
-                     '        player2.ApplyEnterRoom(player1.room_id)\n' \
-                     '        player3.ApplyEnterRoom(player1.room_id)\n' \
-                     '        player4.ApplyEnterRoom(player1.room_id)\n' % (user_mid[0],user_mid[1],user_mid[2],user_mid[3],play, options, cards)
-        disconnect_code = '        while not player1.now_round_over:\n' \
-                          '            time.sleep(0.01)\n' \
-                          '        time.sleep(2)\n' \
-                          '        player1.ConnectClose()\n' \
-                          '        player2.ConnectClose()\n' \
-                          '        player3.ConnectClose()\n' \
-                          '        player4.ConnectClose()\n'
-    elif player_num == 3:
-        fixed_code = '        player1 = UserBehavior(%d, True)\n' \
-                     '        player2 = UserBehavior(%d)\n' \
-                     '        player3 = UserBehavior(%d)\n' \
-                     '        time.sleep(2)\n' \
-                     '        player1.SetGameType = "%s"\n' \
-                     '        create_room_data = %s\n' \
-                     '        player1.CreateRoom(create_room_data)\n' \
-                     '        time.sleep(2)\n' \
-                     '        cards_data = %s\n' \
-                     '        player1.MakeCards(cards_data)\n' \
-                     '        time.sleep(2)\n' \
-                     '        player2.ApplyEnterRoom(player1.room_id)\n' \
-                     '        player3.ApplyEnterRoom(player1.room_id)\n' % (user_mid[0],user_mid[1],user_mid[2],play, options, cards)
-        disconnect_code = '        while not player1.now_round_over:\n' \
-                          '            time.sleep(0.01)\n' \
-                          '        time.sleep(2)\n' \
-                          '        player1.ConnectClose()\n' \
-                          '        player2.ConnectClose()\n' \
-                          '        player3.ConnectClose()\n'
-    else:
-        fixed_code = '        player1 = UserBehavior(%d, True)\n' \
-                     '        player2 = UserBehavior(%d)\n' \
-                     '        time.sleep(2)\n' \
-                     '        player1.SetGameType = "%s"\n' \
-                     '        create_room_data = %s\n' \
-                     '        player1.CreateRoom(create_room_data)\n' \
-                     '        time.sleep(2)\n' \
-                     '        cards_data = %s\n' \
-                     '        player1.MakeCards(cards_data)\n' \
-                     '        time.sleep(2)\n' \
-                     '        player2.ApplyEnterRoom(player1.room_id)\n' % (user_mid[0],user_mid[1],play, options, cards)
+        if player_num != len(users):
+            return "用户mid 和选择人数不一致"
+        #     while not player1.now_round_over:\n
+        if player_num == 4:
+            fixed_code = '        player1 = UserBehavior({user1},{user1},True)\n' \
+                         '        player2 = UserBehavior({user2})\n' \
+                         '        player3 = UserBehavior({user3})\n' \
+                         '        player4 = UserBehavior({user4})\n' \
+                         '        time.sleep(2)\n' \
+                         '        player1.SetGameType = "{gameType}"\n' \
+                         '        player2.SetGameType = "{gameType}"\n' \
+                         '        player3.SetGameType = "{gameType}"\n' \
+                         '        player4.SetGameType = "{gameType}"\n' \
+                         '        create_room_data = {room_data}\n' \
+                         '        player1.{room_key}\n' \
+                         '        time.sleep(2)\n' \
+                         '        cards_data = {card_data}\n' \
+                         '        player1.MakeCards(cards_data)\n' \
+                         '        time.sleep(2)\n' \
+                         '        player2.ApplyEnterRoom(player1.room_id,{romm_type})\n' \
+                         '        player3.ApplyEnterRoom(player1.room_id,{romm_type})\n' \
+                         '        player4.ApplyEnterRoom(player1.room_id,{romm_type})\n'.format(user1=user_mid[0],
+                                                                                    user2=user_mid[1],
+                                                                                    user3=user_mid[2],
+                                                                                    user4=user_mid[3], gameType=play,
+                                                                                    room_data=options,
+                                                                                    room_key=create_key,
+                                                                                    card_data=cards,
+                                                                                    romm_type=join_romm_type
+                                                                                                )
+            disconnect_code = '        time.sleep(5)\n' \
+                              '        player1.ConnectClose()\n' \
+                              '        player2.ConnectClose()\n' \
+                              '        player3.ConnectClose()\n' \
+                              '        player4.ConnectClose()\n'
 
-        disconnect_code = '        while not player1.now_round_over:\n' \
-                          '            time.sleep(0.01)\n' \
-                          '        time.sleep(2)\n' \
-                          '        player1.ConnectClose()\n' \
-                          '        player2.ConnectClose()\n'
-    return fixed_code, disconnect_code
+        elif player_num == 3:
+            fixed_code = '        player1 = UserBehavior({user1},{user1},True)\n' \
+                         '        player2 = UserBehavior({user2})\n' \
+                         '        player3 = UserBehavior({user3})\n' \
+                         '        time.sleep(2)\n' \
+                         '        player1.SetGameType = "{gameType}"\n' \
+                         '        player2.SetGameType = "{gameType}"\n' \
+                         '        player3.SetGameType = "{gameType}"\n' \
+                         '        create_room_data = {room_data}\n' \
+                         '        player1.{room_key}\n' \
+                         '        time.sleep(2)\n' \
+                         '        cards_data = {card_data}\n' \
+                         '        player1.MakeCards(cards_data)\n' \
+                         '        time.sleep(2)\n' \
+                         '        player2.ApplyEnterRoom(player1.room_id,{romm_type})\n' \
+                         '        player3.ApplyEnterRoom(player1.room_id,{romm_type})\n'.format(user1=user_mid[0],
+                                                                                    user2=user_mid[1],
+                                                                                    user3=user_mid[2], gameType=play,
+                                                                                    room_data=options,
+                                                                                    room_key=create_key,
+                                                                                    card_data=cards,
+                                                                                    romm_type=join_romm_type)
+            disconnect_code = '        time.sleep(5)\n' \
+                              '        player1.ConnectClose()\n' \
+                              '        player2.ConnectClose()\n' \
+                              '        player3.ConnectClose()\n'
 
+        else:
+            fixed_code = '        player1 = UserBehavior({user1},{user1},True)\n' \
+                         '        player2 = UserBehavior({user2})\n' \
+                         '        time.sleep(2)\n' \
+                         '        player1.SetGameType = "{gameType}"\n' \
+                         '        player2.SetGameType = "{gameType}"\n' \
+                         '        create_room_data = {room_data}\n' \
+                         '        player1.{room_key}\n' \
+                         '        time.sleep(2)\n' \
+                         '        cards_data = {card_data}\n' \
+                         '        player1.MakeCards(cards_data)\n' \
+                         '        time.sleep(2)\n' \
+                         '        player2.ApplyEnterRoom(player1.room_id,{romm_type})\n'.format(user1=user_mid[0],
+                                                                                    user2=user_mid[1], gameType=play,
+                                                                                    room_data=options,
+                                                                                    room_key=create_key,
+                                                                                    card_data=cards,
+                                                                                    romm_type=join_romm_type)
+            
+            disconnect_code = '        time.sleep(5)\n' \
+                              '        player1.ConnectClose()\n' \
+                              '        player2.ConnectClose()\n'
+
+        return fixed_code, disconnect_code
+    except Exception as err:
+        logging.info(err)
 
 # 将操作步骤进行转换
-def transform_operate_data(operate_data):
+def transform_operate_data(play,operate_data):
+    MajiangGameNameList = ["长沙麻将", "红中麻将", "转转麻将", "衡阳麻将", '新宁麻将', '邵阳麻将', '靖州麻将']
     operate_code = []
-    for data in operate_data:
-        code = ''
-        info_list = data.split('-')
-        if '玩家1' in info_list:
-            code += '        player1.'
-        elif '玩家2' in info_list:
-            code += '        player2.'
-        elif '玩家3' in info_list:
-            code += '        player3.'
-        elif '玩家4' in info_list:
-            code += '        player4.'
+    try:
+        for data in operate_data:
+            print("xxxxx", data)
+            if play in MajiangGameNameList:
+                if len(data['card']) != 0:
+                    data['card'] += r'\x00'
+                code = ''
+                for k, v in data.items():
 
-        if '出牌' in info_list:
-            code += "OperateApi('出', '', %s)\n" % [info_list[-1]]
-            code += '        time.sleep(1)\n'
+                    if k == "users":
+                        if '玩家1' == v:
+                            code += '        player1.'
+                        elif '玩家2' == v:
+                            code += '        player2.'
+                        elif '玩家3' == v:
+                            code += '        player3.'
+                        elif '玩家4' == v:
+                            code += '        player4.'
 
-        if "碰牌" in info_list:
-            code += "OperateApi('碰')\n"
-            code += '        time.sleep(1)\n'
+                    if k == "operation":
+                        if v == "出牌":
+                            code += "OperateApi('出', '', '%s')\n" % data['card']
+                        if v == "碰牌":
+                            code += "OperateApi('碰')\n"
+                        if v == "过牌":
+                            code += "OperateApi('过')\n"
+                        if v == "胡牌":
+                            code += "OperateApi('胡')\n"
+                        if v == "吃牌":
+                            code += "OperateApi('吃', '', '%s')\n" % data['card']
+                        if v == "补杠":
+                            code += "OperateApi('补杠', '', '%s')\n" % data['card']
+                        if v == "飘分":
+                            code += "OperateApi('飘分', '', %d)\n" % int(data['card'][0])
+                        if v =="加锤":
+                            code += "OperateApi('加锤', '', %d)\n" % int(data['card'][0])
 
-        if "过牌" in info_list:
-            code += "OperateApi('过')\n"
-            code += '        time.sleep(1)\n'
 
-        if "胡牌" in info_list:
-            code += "OperateApi('胡')\n"
-            code += '        time.sleep(1)\n'
+                operate_code.append(code)
+            else:
+                code = ''
+                for k, v in data.items():
 
-        if '吃牌' in info_list:
-            code += "OperateApi('吃', '', %s)\n" % info_list[2].split(',')
-            code += '        time.sleep(1)\n'
+                    if k == "users":
+                        if '玩家1' == v:
+                            code += '        player1.'
+                        elif '玩家2' == v:
+                            code += '        player2.'
+                        elif '玩家3' == v:
+                            code += '        player3.'
+                        elif '玩家4' == v:
+                            code += '        player4.'
 
-        operate_code.append(code)
+                    if k == "operation":
+                        if v == "出牌":
+                            code += "OperateApi('出', '', '%s')\n" % data['card']
+                            code += '        time.sleep(1)\n'
+                        if v == "碰牌":
+                            code += "OperateApi('碰')\n"
+                            code += '        time.sleep(1)\n'
+                        if v == "过牌":
+                            code += "OperateApi('过')\n"
+                            code += '        time.sleep(1)\n'
+                        if v == "胡牌":
+                            code += "OperateApi('胡')\n"
+                            code += '        time.sleep(1)\n'
+                        if v == "吃牌":
+                            code += "OperateApi('吃', '', '%s')\n" % data['card']
+                            code += '        time.sleep(1)\n'
+                        if v == "补杠":
+                            code += "OperateApi('补杠', '', '%s')\n" % data['card']
+                            code += '        time.sleep(1)\n'
+                operate_code.append(code)
 
-    return operate_code
-
+        return operate_code
+    except Exception as err:
+        logging.info(err)
 
 
 

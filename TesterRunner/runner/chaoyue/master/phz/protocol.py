@@ -47,6 +47,16 @@ class Encrypt2ParseData:
                             else:
                                 # print(u"单张出牌操作数据: %s" % str(v[1]))
                                 package.write_string(str(v[1]))
+                        elif self.update_data["protocol_num"][1] == 5023:
+                            if type(v[1]) is list:
+                                if len(v[1]) > 0:
+                                    for i in v[1]:
+                                        print("aaaaaa",i)
+                                        print(package.write_string(str(i)))
+                                        package.write_string(str(i))
+                            else:
+                                package.write_string(str(v[1]))
+
                         else:
                             package.write_string(str(v[1]))
         # print("package.encode: %s" % package.encode())
@@ -71,8 +81,11 @@ class CommonUtils2UpdateData:
                 if k in self.original_data_keys_list:
                     self.original_data[k][1] = v
 
-        # if self.original_data["protocol_num"][1] == 1012:
-        # print("data: %s" % self.original_data)
+        if self.original_data["protocol_num"][1] == 1000:
+            print("data: %s" % self.original_data)
+
+        if self.original_data["protocol_num"][1] == 5023:
+            print("~~~~~~~~~~~~~~~~: 5023 -> " % self.original_data)
         ud = Encrypt2ParseData(self.original_data, self.method)
         return ud.get_update_data()
 
@@ -158,39 +171,7 @@ class CSCreateRoom:
                                       "gamePaiShu": ["INT32", 0],
                                       "gameGuDingWanFa": ["INT32", 0],
                                       "gameParamIndex": ["INT32", 0]}
-        # self.cs_create_room_entity = {"protocol_num": ["INT32", 1010],
-        #                               "gameRoomType": ["STRING", ""],
-        #                               "gameCiShu": ["INT32", 0],
-        #                               "gameFanShu": ["INT32", 0],
-        #                               "gameWanFa": ["INT32", 0],  #玩法
-        #                               "gameJiaRuPaiJu": ["INT32", 0],  #是否参与牌局
-        #                               "gamePlayer": ["INT32", 3],  #游戏人数
-        #                               "gameFanXing": ["INT32", 0],  #翻醒
-        #                               "gameLianZhuang": ["INT32", 0],  #连庄
-        #                               "gameDiFen": ["INT32", 0],  #底分
-        #                               "gameFengDing": ["INT32", 0],  #封顶
-        #                               "gameZiMoFanBei": ["INT32", 0],  #自摸翻倍
-        #                               "gameDianPaoBiHu": ["INT32", 2],  #点炮必胡
-        #                               "gameMaoHu": ["INT32", 0],  #毛胡
-        #                               "gameQiHu": ["INT32", 0],  #起胡
-        #                               "gameHuYiDeng": ["INT32", 0],  #胡一等
-        #                               "gameBPLianZhuang": ["INT32", 0],  #连庄
-        #                               "gameJiaTuo": ["INT32", 0],  #加拓
-        #                               "gameYiWuShi": ["INT32", 0],  #一五十
-        #                               "gameDaNiao": ["INT32", 0],  #扎鸟
-        #                               "gameClubId": ["INT32", 0],  #房间区分
-        #                               "gameVip": ["INT32", 0],  #clubVIP
-        #                               "gameReDouble":["INT32", 0],  #结算是否翻倍
-        #                               "gameClubName": ["STRING", "tt"],  #俱乐部名字
-        #                               "gameShiZhongPai": ["INT32", 0],  #可胡示众牌
-        #                               "gamePaiShu": ["INT32", 0],  #牌的张数
-        #                               "gameGuDingWanFa": ["INT32", 0],  #是否固定开房
-        #                               "gameParamIndex": ["INT32", 0],  #固定参数
-        #                               "gameLocationLimit":["INT32", 0],  #位置限制
-        #                               "ganmeintegralDouble":["STRING", ""],  #积分加倍翻倍
-        #                               "ganmeCoupon": ["STRING", ""],  # 点券创房
-        #
-        #                               }  #固定参数
+
 
         self.cs_keys_list = self.cs_create_room_entity.keys()
         self.update_data = data
@@ -904,3 +885,568 @@ class SCServerPushGodCards:
 class SCSmellyCard:
     def __init__(self):
         self.sc_entity_data = {'AbsoluteCard': ['STRING', ''], 'IndirectCard': ['STRING', '']}
+
+
+
+# =========================================>>>>>>>>>> 跑得快 <<<<<<<<<<====================================
+
+#跑得快创房数据
+class RunfastCreateRoom:
+    def __init__(self, data={}):
+        self.sc_entity_data = {"protocol_num": ["INT32", 1010],
+                                      "gameRoomType": ["STRING", ""],
+                                      "gameCiShu": ["INT32", 0],
+                                      "gamePlayer": ["INT32", 3],  # 游戏人数
+                                      "gameJiaRuPaiJu": ["INT32", 0],  # 是否参与牌局
+                                      "gameWanFan": ["INT32", 0],  # 玩法
+                                      "gameDiFen": ["INT32", 0],  # 底分
+                                      "gameDoubleValue": ["INT32", 0],  # 加倍
+                                      "gameScoreMultiple": ["INT32", 0],  # 加倍条件
+                                      "gameClubId": ["INT32", 0],   # 俱乐部ID
+                                      "gameClubName": ["STRING", "tt"],  # 俱乐部名字
+                                      "gameGuDingWanFa": ["INT32", -1],  # 是否固定开房
+                                      "gameParamIndex": ["INT32", 0],  # 固定参数
+                                      "gameLocationLimit": ["INT32", 0],  # 位置限制
+                                      "ganmeintegralDouble": ["STRING", ""],  # 积分加倍翻倍
+                                      "ganmeCoupon": ["STRING", ""],  # 点券创房
+
+                                      }
+        self.cs_keys_list = self.sc_entity_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.sc_entity_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+
+#   发起解散房间
+class CSDissolveRoomFunfast:
+    def __init__(self, data={}):
+        self.cs_dissolve_room_data = {"protocol_num": ["INT32", 5008]}
+        self.cs_keys_list = self.cs_dissolve_room_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_dissolve_room_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+class SCDissolveRoomFunfast:
+    def __init__(self):
+        self.sc_entity_data = {"error_code": ["INT32", 99], "mid": ["INT32", 0], " remaining time": ["INT32", 0],
+                               "agree_player": ["INT32", 0], "agree_playerInfo": ["INT32", []]}
+
+#   准备
+class CSRequestReadyRunfast:
+    def __init__(self, data={}):
+        self.cs_request_ready_data = {"protocol_num": ["INT32", 5005]}
+        self.cs_keys_list = self.cs_request_ready_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_request_ready_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+class SCReady:
+    def __init__(self):
+        self.sc_entity_data = {"user_id": ["INT32", 0]}
+
+
+
+# 跑得快解散同意解散房间
+class CSChoseDissolveRoomRunfast:
+    def __init__(self, data={}):
+        self.cs_chose_dissolve_room_data = {"protocol_num": ["INT32", 5012], "option": ["INT32", 1]}
+        self.cs_keys_list = self.cs_chose_dissolve_room_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_chose_dissolve_room_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+#   跑得快发牌
+class SCSendCardsRunfast:
+    def __init__(self):
+        self.sc_entity_data = {"card_num": ["INT32", 0], "card_lists": ["STRING", []],"banker_id": ["INT32", 0]}
+
+
+#   跑得快发牌
+class SCNextUserRunfast:
+    def __init__(self):
+        self.sc_entity_data = {"user_id": ["INT32", 0]}
+
+# 跑得快出牌
+class CSOutCardRunfast:
+    def __init__(self, data={}):
+
+        self.cs_request_function_data = {"protocol_num": ["INT32", 5023],
+                                         "operation": ["STRING", ''],
+                                         "card_num": ["INT32", 0],
+                                         "card_info": ["STRING", []],
+                                             }
+        self.cs_keys_list = self.cs_request_function_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_request_function_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+
+#   跑得快发牌
+class SCOutCard:
+    def __init__(self):
+        self.sc_entity_data = {"err": ["INT32", 0],
+                               }
+# 跑得快广播游戏开始
+class SCBroadcastGameStart:
+    def __init__(self):
+        self.sc_entity_data = {"err": ["INT32", 0],
+                               "Have_to_play_num": ["INT32", 0],
+                               }
+
+class SCRunfastOperation:
+    def __init__(self):
+        self.sc_entity_data = {"seat_id": ["INT32", 0],
+                               "Operation_num": ["INT32", 0],
+                               "Operation_info": ["INT32", []],
+                               "Operation_id": ["STRING", ''],
+                               }
+
+class SCRunfastDissolveroom:
+    def __init__(self):
+        self.sc_entity_data = {"err": ["INT32", 0],
+
+                               }
+
+
+class SCRunfastSettleAccountsSmall:
+    def __init__(self):
+        self.sc_entity_data = {"banker_id": ["INT32", 0],
+                               'surplus_num': ["INT32", 0],
+                               'players_num': ["INT32", 0],
+                               'players_info': ["INT32", None],
+                               'rooms_info': ["STRING", None],
+                               'zhongniao_seatID': ["INT32", 0],
+                               'reserved': ["STRING", ''],
+                               'cards_remaining_num': ["INT32", 0],
+                               'cards_info': ["INT32", 0],
+                               }
+
+class SCRunfastSettleAccountsBig:
+    def __init__(self):
+        self.sc_entity_data = {"owner_id": ["INT32", 0],
+                               'Playing_num': ["INT32", 0],
+                               'Playing_info': ["INT32", None],
+                               'rooms_info': ["STRING", None],
+                               'duoble': ["INT32", 0],
+                               'overTime': ["INT32", 0],
+                               'dissolveType': ["INT32", 0],
+                               'dissolveTypeInfo': ["INT32", None],
+
+                               }
+
+
+
+
+
+class SCRunfastBeenDisband:
+    def __init__(self):
+        self.sc_entity_data = {"mid": ["INT32", 0],
+                               'game_type': ["STRING", 0],
+                               'players_num': ["INT32", 0],
+                               'close_type':["INT32", 0],
+                               }
+class SCRunfastLeaveRoom:
+    def __init__(self):
+        self.sc_entity_data = {"err": ["INT32", 0],
+                               "mid": ["INT32", 0],
+                               }
+
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  麻将  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+#   create room entity -->CS
+class CSCreateRoomMajiang:
+    def __init__(self, data={}):
+        self.cs_create_room_entity = {"protocol_num": ["INT32", 1010],
+                                      "gameRoomType": ["STRING", ""],
+                                      "gameJuShu": ["INT32", 0],
+                                      "gamePlayer": ["INT32", 3],
+                                      "gameJiaRuPaiJu": ["INT32", 0],
+                                      "gameWanFa": ["INT32", 0],
+                                      "gameDiFen": ["INT32", 0],
+                                      "gameDoubleVal": ["INT32", 0],
+                                      "gameDoubleReq": ["INT32", 0],
+                                      "gameClubId": ["INT32", 0],
+                                      "gameClubName": ["STRING", "tt"],
+                                      "gameGuDingWanFa": ["INT32", 0],
+                                      "gameIndex": ["INT32", 0],
+                                      "gameSetting  ": ["INT32", 0],
+                                      "gamePlayType": ["INT32", 0],
+                                      "gameZhaMa": ["INT32", 0],
+                                      "gameMingTang": ["INT32", 0],
+                                      "gameScoreMultiple": ["STRING", ''],
+                                      "gameTlvParam": ["STRING", ''],
+
+                                      }
+
+        self.cs_keys_list = self.cs_create_room_entity.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_create_room_entity, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+#   dissolve room -->CS
+class CSDissolveRoomMajiang:
+    def __init__(self, data={}):
+        self.cs_dissolve_room_data = {"protocol_num": ["INT32", 6008]}
+        self.cs_keys_list = self.cs_dissolve_room_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_dissolve_room_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+
+class SCMajiangDissolve:
+    def __init__(self):
+        self.sc_entity_data = {"err": ["INT32", 99],
+                               "seat_id": ["INT32", 0],
+                               "time": ["INT32", 0],
+                               "player_num": ["INT32", 0],
+                               "player_info": ["INT32", 0],
+                               }
+#   准备
+class CSRequestReadyMajiang:
+    def __init__(self, data={}):
+        self.cs_request_ready_data = {"protocol_num": ["INT32", 6005]}
+        self.cs_keys_list = self.cs_request_ready_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_request_ready_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+
+class SCMajiangLeaveRoom:
+    def __init__(self):
+        self.sc_entity_data = {"err": ["INT32", 0],
+                               "seat_id": ["INT32", 0],
+
+                               }
+
+class SCMajiangBeenDisband:
+    def __init__(self):
+        self.sc_entity_data = {"mid": ["INT32", 0],
+                               "game_type": ["STRING", ''],
+                               "diss_type": ["INT32", ''],
+
+                               }
+
+class SCMajiangReady:
+    def __init__(self):
+        self.sc_entity_data = {"seat_id": ["INT32", 0],
+                               }
+class SCMajiangGameStart:
+    def __init__(self):
+        self.sc_entity_data = {"err": ["INT32", 99],
+                               "off_of_jushu": ["INT32", 0],
+                               }
+class SCMajiangNotifyOnDeal:
+    def __init__(self):
+        self.sc_entity_data = {"hand_card_num": ["INT32", 0],
+                               "hand_cards": ["INT32", ''],
+                               "dun_card_num":["INT32", 0],
+                               "banker_seat_id": ["INT32", 0],
+                               }
+class SCMajiangNextPlayer:
+    def __init__(self):
+        self.sc_entity_data = {"seat_id": ["INT32", 0],
+
+                               }
+
+class SCMajiangNotifyIsTing:
+    def __init__(self):
+        self.sc_entity_data = {"ting": ["INT32", 0],
+
+                               }
+class SCMajiangOperate:
+    def __init__(self):
+        self.sc_entity_data = {"seat_id": ["INT32", 0],
+                               "operate_type_num": ["INT32", 0],
+                               "operate_type_info": ["INT32", 0],
+                               "operate_sign": ["STRING", ''],
+                               }
+class SCMajiangResponseDissoleve:
+    def __init__(self):
+        self.sc_entity_data = {"err": ["INT32", 99],
+                               }
+
+class SCMajiangAccountSmall:
+    def __init__(self):
+        self.sc_entity_data = {"banker_id": ["INT32", 0],
+                               "next_banker_id": ["INT32", 0],
+                               'surplus_num': ["INT32", 0],
+                               'hu_type': ["INT32", 0],
+                               'hu_paimian': ["STRING", 0],
+                               'hu_player_num': ["INT32", 0],
+                               'hu_player_seat_id': ["INT32", 0],
+                               'players_num': ["INT32", 0],
+                               'players_info': ["STRING", None],
+
+                               'zhaoMa_num': ["INT32", 0],
+                               'zhaoMa_card': ["STRING", 0],
+                               'room_info': ["STRING", None],
+                               "surplus_cards": ['STRING',''],
+
+                               'zhongMa_players_num': ["INT32", 0],
+                               'zhongMa_players_info': ["STRING", None],
+
+                               }
+
+
+class SCMajiangZhaMa:
+    def __init__(self):
+        self.sc_entity_data = {
+                               'zhaMa_num': ["INT32", 0],
+                               'zhaMa_card': ["STRING", None],
+                               'zhongMa_players_num': ["INT32", 0],
+                               'zhongMa_players_info': ["STRING", None],
+
+                               }
+
+class SCMajiangAccountBig:
+    def __init__(self):
+        self.sc_entity_data = {"owner_id": ["INT32", 0],
+                               "banker_id": ["INT32", 0],
+                               'Playing_num': ["INT32", 0],
+                               'Playing_info': ["STRING", None],
+                               'rooms_info': ["STRING", None],
+                               'duoble': ["INT32", 0],
+                               'overTime': ["INT32", 0],
+                               'dissolveType': ["INT32", 0],
+                               'dissolveTypeInfo': ["INT32", None],
+
+                               }
+
+
+
+
+# 同意解散房间
+class CSChoseDissolveRoomMajiang:
+    def __init__(self, data={}):
+        self.cs_chose_dissolve_room_data = {"protocol_num": ["INT32", 6012], "option": ["INT32", 1]}
+        self.cs_keys_list = self.cs_chose_dissolve_room_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_chose_dissolve_room_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+
+# 麻将出牌
+class CSOutCardMajiang:
+    def __init__(self, data={}):
+
+        self.cs_request_function_data = {"protocol_num": ["INT32", 6029],
+                                         "card": ["STRING", ''],
+                                         "operation_sign": ["STRING", 0],
+
+                                             }
+        self.cs_keys_list = self.cs_request_function_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_request_function_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+
+class SCMajiangOnPlay:
+    def __init__(self):
+        self.sc_entity_data = {"Error": ["INT32", 0],
+                               "Card": ["STRING", 0],
+
+                               }
+
+#吃牌
+class CSChiCardMajiang:
+    def __init__(self, data={}):
+
+        self.cs_request_function_data = {"protocol_num": ["INT32", 6031],
+                                         "card": ["STRING", ''],
+                                         "operation_sign": ["STRING", 0],
+
+                                             }
+        self.cs_keys_list = self.cs_request_function_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_request_function_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+class SCMajiangOnChi:
+    def __init__(self):
+        self.sc_entity_data = {"Error": ["INT32", 0],
+                               "Card": ["STRING", 0],
+                               "seat_id": ["INT32", 0],
+                               "seat_id_Card": ["STRING", 0],
+
+                               }
+
+# 碰牌
+class CSPengCardMajiang:
+    def __init__(self, data={}):
+
+        self.cs_request_function_data = {"protocol_num": ["INT32", 6032],
+                                         "operation_sign": ["STRING", 0],
+
+                                             }
+        self.cs_keys_list = self.cs_request_function_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_request_function_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+class SCMajiangOnPeng:
+    def __init__(self):
+        self.sc_entity_data = {"Error": ["INT32", 0],
+                               "by_peng_seat_id": ["INT32", 0],
+                               "by_card":["STRING", 0],
+
+                               }
+
+
+#杠牌
+class CSGangCardMajiang:
+    def __init__(self, data={}):
+
+        self.cs_request_function_data = {"protocol_num": ["INT32", 6033],
+                                         "card": ["STRING", ''],
+                                         "operation_sign": ["STRING", 0],
+
+                                             }
+        self.cs_keys_list = self.cs_request_function_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_request_function_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+
+class SCMajiangOnGang:
+    def __init__(self):
+        self.sc_entity_data = {"Error": ["INT32", 0],
+                               }
+
+#胡牌
+class CSHuCardMajiang:
+    def __init__(self, data={}):
+
+        self.cs_request_function_data = {"protocol_num": ["INT32", 6034],
+                                         "operation_sign": ["STRING", 0],
+
+                                             }
+        self.cs_keys_list = self.cs_request_function_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_request_function_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+
+class SCMajiangOnHu:
+    def __init__(self):
+        self.sc_entity_data = {"Error": ["INT32", 0],
+                               }
+
+
+
+#取消操作
+class CSOnCancelMajiang:
+    def __init__(self, data={}):
+
+        self.cs_request_function_data = {"protocol_num": ["INT32", 6030],
+                                         "operation_sign": ["STRING", 0],
+
+                                             }
+        self.cs_keys_list = self.cs_request_function_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_request_function_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+
+class SCMajiangOnCancle:
+    def __init__(self):
+        self.sc_entity_data = {"Error": ["INT32", 0],
+                               }
+class SCMajiangMoCard:
+    def __init__(self):
+        self.sc_entity_data = {"seat_id": ["INT32", 0],
+                               "card": ["STRING", 0],
+                               "dunCard_num": ["INT32", 0],
+                               }
+
+#补杠
+class CSOnBuMajiang:
+    def __init__(self, data={}):
+
+        self.cs_request_function_data = {"protocol_num": ["INT32", 6050],
+                                         "card": ["STRING", ''],
+                                         "operation_sign": ["STRING", 0],
+                                             }
+        self.cs_keys_list = self.cs_request_function_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_request_function_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+class SCMajiangOnBu:
+    def __init__(self):
+        self.sc_entity_data = {"ErrorCode": ["INT32", 0],
+                               "OperCardsType": ["INT32", 0],
+                               "OnGangSeatID": ["INT32", 0],
+                               "Card": ["STRING", 0],
+                           }
+
+#飘风
+class CSQiaoScoreMajiang:
+    def __init__(self, data={}):
+
+        self.cs_request_function_data = {"protocol_num": ["INT32", 6021],
+                                         "score":   ["INT32", 6021],
+                                         "operation_sign": ["STRING", 0],
+
+                                             }
+        self.cs_keys_list = self.cs_request_function_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_request_function_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+
+
+class SCMajiangPiaoFen:
+    def __init__(self):
+        self.sc_entity_data = {"seat_id": ["INT32", 0],
+                               "piaoScore": ["INT32", 0],
+                           }
+
+class SCMajiangPiao:
+    def __init__(self):
+        self.sc_entity_data = {
+                               "operation_sign": ["STRING", 0],
+                           }
+
+class SCMajiangNotifyJiaChui:
+    def __init__(self):
+        self.sc_entity_data = {
+                               "operation_sign": ["STRING", 0],
+                           }
+
+
+class CSOnChuiMajiang:
+    def __init__(self, data={}):
+
+        self.cs_request_function_data = {"protocol_num": ["INT32", 6053],
+                                         "chui": ["INT32", 0],
+                                         "operation_sign": ["STRING", 0],
+
+                                             }
+        self.cs_keys_list = self.cs_request_function_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_request_function_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+class SCMajiangChui:
+    def __init__(self):
+        self.sc_entity_data = {"ErrorCode": ["INT32", 0],
+                               "chui": ["INT32", 0],
+                           }
