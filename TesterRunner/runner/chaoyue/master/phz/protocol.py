@@ -232,6 +232,12 @@ class CSLeaveRoom:
                                        self.method).real_data
 
 
+#加锤
+class SCJiachui:
+    def __init__(self):
+        self.sc_entity_data = {'jiachui':["INT32", 00]}
+
+
 #   leave room -->SC
 class SCLeaveRoom:
     def __init__(self):
@@ -376,6 +382,20 @@ class CSRequestReady:
 class SCRequestReady:
     def __init__(self):
         self.sc_entity_data = {"error_code": ["INT32", 0], "seat_id": ["INT32", 0], "is_ready": ["INT32", 0]}
+
+#跑胡子选择加锤
+class CSPaohuziJiaChui:
+    def __init__(self, data={}):
+        self.cs_request_ready_data = {"protocol_num": ["INT32", 1059],"is_jiachui": ["INT32", 0]}
+        self.cs_keys_list = self.cs_request_ready_data.keys()
+        self.update_data = data
+        self.method = "pack"
+        self.real_data = CallUpdateApi(self.cs_request_ready_data, self.cs_keys_list, self.update_data,
+                                       self.method).real_data
+
+class SCPaohuziJiaChui:
+    def __init__(self):
+        self.sc_entity_data = {"seat_id": ["INT32", 0], "is_option": ["INT32", 0]}
 
 
 #   trusteeship --> CS

@@ -10,12 +10,14 @@
 import json
 import requests
 import logging
+import time
 from runner.chaoyue.master.phz.config import *
 from runner.chaoyue.master.phz.connect import *
 from runner.chaoyue.master.phz.utils import *
 from runner.chaoyue.master.phz.unpack import *
 from runner.chaoyue.master.phz.cards import *
 from runner.logger import *
+from runner.chaoyue.master.phz.set_cardtype_utils import *
 
 
 def helper_print(account, function_name, protocol_number, data, print_state=False):
@@ -24,7 +26,9 @@ def helper_print(account, function_name, protocol_number, data, print_state=Fals
             account, protocol_number, time.strftime("%Y-%m-%d %X", time.localtime())))
         print("%s: %s" % (function_name, data))
         # print()
-
+def Log_outPut(msg, *args, **kwargs):
+    logging.info(msg, *args, **kwargs)
+    print(msg, *args, **kwargs)
 
 class UserBehavior(object):
     def __init__(self, mid, isHomeOwner=False, different="local"):
@@ -85,7 +89,7 @@ class UserBehavior(object):
         self.isAgree = False  # 设置解散房间同意状态
         self.last_push_card = None  # 上个玩家出的牌
         self.remain_card = None  # 荒牌状态
-
+        self.paohuzi_broadcast_jiaochui = False   #跑胡子广播加锤
         self.reconnect_status = False  # 重连状态
         self.sc_now_operation_player = None  # 当前操作用户
         self.room_dissolve_status = False  # 解散房间状态
@@ -107,9 +111,12 @@ class UserBehavior(object):
         self.departure_room_data = {}  # 离开房间返回数据
         self.is_join_hand_card = None  # 加入手牌
         self.mo_card = None  # 摸牌
+        self.enterRoomError = False      #跑胡子加入房间失败
         self.chi_card = None  # 吃的牌
+        self.serial = None               #跑胡子操作码
+        self.paohuzi_Operate = []        #跑胡子操作动作
         self.player_hand_cards = []  # 玩家手上的牌
-        self.GameNameList = ["跑得快15张","跑得快16张"]
+        self.RunfastGameNameList = ["跑得快15张","跑得快16张"]
         self.MajiangGameNameList = ["长沙麻将", "红中麻将","转转麻将","衡阳麻将",'新宁麻将','邵阳麻将','靖州麻将']
         self.runfast_operation_id = None      #跑得快操作ID
         #>>>>>>>>>>>>>>>>>>>>> 麻将 <<<<<<<<<<<<<<<<<<<<
@@ -117,13 +124,26 @@ class UserBehavior(object):
         self.can_operate_start = False
         self.majiang_piao = None
         self.majiang_chui = None
+        self.createRoom_error = False       #创房失败
         self.phz_login()
+        
 
 
     def ConnectClose(self):
-        logging.info("进入关闭通道")
+
+        self.DissolveRoomFunfast()
+        self.DissolveRoomMajiang()
+        self.DissolveRoom()
+        time.sleep(5)
+        Log_outPut("进行断开链接!")
+
         self.conn.connection_close()
-        self.conn.close_loop()
+        # self.conn.close_loop()
+
+    def maker_card(self,cards,roomID):
+        makerCard = TestLoginPerfor(self.ip, self.port)
+        makerCard.maker_card(cards,roomID)
+        
 
     #   注册用户
     def phz_get_sseskey(self):
@@ -131,6 +151,7 @@ class UserBehavior(object):
                             'channel': self.confData['channel_id'], 'gp': self.confData['gp_id'], 'pass': ''}
 
         try:
+            
             #   请求访问
             url = None
             if self.different == "local":
@@ -289,7 +310,7 @@ class UserBehavior(object):
 
     def ProtocolDataProcess(self, protocolNum, data):
         try:
-            L = [1017, 1086, 10022, 10080, 10008,5003,5002,5006,5005,6003,6002,6024,6028,6035,6045,6054]
+            L = [1017, 1086, 10022, 10080, 10008,5003,5002,5006,5005,6003,6002,6024,6028,6035,6045,6054,5000]
             if protocolNum in L:
                 return
             if protocolNum == 1026 and not self.game_start:
@@ -338,7 +359,6 @@ class UserBehavior(object):
     #   登录
     def qs_login(self, mid, gp):
         update_data = {"mid": mid, "gp": 101}
-        print(update_data)
         cs_login_data = CSLogin(update_data)
         self.SendDataToServer(cs_login_data.real_data)
 
@@ -353,13 +373,14 @@ class UserBehavior(object):
     def OnReconnect(self, data):
         if data['room_id'][1] != 0:
             self.last_room_id = data['room_id'][1]
-            # if self.last_room_id != 0:
-            #     self.ApplyEnterRoom(self.last_room_id)
-            logging.info("玩家: {0} 断线重连成功, 并且在房间中, 房间号是: {1}".format(self.user_mid, data['room_id'][1]))
-            print("玩家: {0} 断线重连成功, 并且在房间中, 房间号是: {1}".format(self.user_mid, data['room_id'][1]))
+            Log_outPut("玩家: {0} 断线重连成功, 并且在房间中, 房间号是: {1}".format(self.user_mid, data['room_id'][1]))
+            self.DissolveRoomFunfast()
+            self.DissolveRoomMajiang()
+            self.DissolveRoom()
+
         else:
-            logging.info("玩家: {0} 断线重连成功, 不在房间中。".format(self.user_mid))
-            print("玩家: {0} 断线重连成功, 不在房间中。".format(self.user_mid))
+            Log_outPut("玩家: {0} 断线重连成功, 不在房间中。".format(self.user_mid))
+
 
     def CheckIn(self):
         time.sleep(2)
@@ -375,13 +396,13 @@ class UserBehavior(object):
         time.sleep(1)
         cs_create_room_data = None
         create_room_data = RoomDataReplace(self.SetGameType, update_data)
-        if self.SetGameType in self.GameNameList:
+        if self.SetGameType in self.RunfastGameNameList:
             cs_create_room_data = RunfastCreateRoom(create_room_data)
         elif self.SetGameType in self.MajiangGameNameList:
             cs_create_room_data = CSCreateRoomMajiang(create_room_data)
         else:
             cs_create_room_data = CSCreateRoom(create_room_data)
-        print("创房：", create_room_data)
+        # print("创房：", create_room_data)
         self.SendDataToServer(cs_create_room_data.real_data)
         # create_room_data['gameClubId'] = 6721121
         # create_room_data['gameClubName'] = "自动化测试"
@@ -394,27 +415,29 @@ class UserBehavior(object):
         self.SendDataToServer(cs_create_room_leiyang_data.real_data)
 
     def OnCreateRoom(self, data):
+        # Log_outPut("OnCreateRoom：%s"%data)
         self.create_room_code = data['error_code'][1]
         if data["error_code"][1] == 0:
             self.room_id = data["gameRoomId"][1]
             self.room_type = int(data['gameRoomType'][1][:len(data['gameRoomType'][1]) - 1])
             self.player_num = data["gamePlayer"][1]
-            logging.info("玩家: {0} 创建< {1} >房间成功.".format(self.user_mid, GetGameType(self.room_type)))
-            print("玩家: {0} 创建< {1} >房间成功.".format(self.user_mid, GetGameType(self.room_type)))
-
+            Log_outPut("玩家: {0} 创建< {1} >房间成功.".format(self.user_mid, GetGameType(self.room_type)))
         elif data['error_code'][1] == -78:
-            if self.SetGameType in self.GameNameList:
+            if self.SetGameType in self.RunfastGameNameList:
+                Log_outPut("{跑得快}准备发起解散!  如解散失败,请检查玩家是否在别的玩法游戏。so....<跑胡子，麻将，跑得快>解散协议号不一样")
                 self.DissolveRoomFunfast()
             elif self.SetGameType in self.MajiangGameNameList:
-
+                Log_outPut("{麻将玩法}准备发起解散!  如解散失败,请检查玩家是否在别的玩法游戏。so....<跑胡子，麻将，跑得快>解散协议号不一样")
                 self.DissolveRoomMajiang()
             else:
+                Log_outPut("{跑胡子}准备发起解散!  如解散失败,请检查玩家是否在别的玩法游戏。so....<跑胡子，麻将，跑得快>解散协议号不一样")
                 self.DissolveRoom()
         else:
-            logging.info("创房失败:Error: %s" % data["error_code"][1])
-            print("创房失败:Error: %s" % data["error_code"][1])
+            if data["error_code"][1] == -7:
+                Log_outPut("创房失败: 无效操作")
+                self.createRoom_error = True
 
-
+            Log_outPut("创房失败:Error: %s" % data["error_code"][1])
 
 
 
@@ -441,24 +464,25 @@ class UserBehavior(object):
             print("玩家: {0} 创建< {1} >房间成功.".format(self.user_mid, GetGameType(self.room_type)))
 
     def ApplyEnterRoom(self, room_id, join_room_type=0):
+        if self.createRoom_error is True:  #创房失败
+            return
+
         update_data = {"room_id": room_id, "join_room_type": join_room_type}
         cs_enter_room_data = CSRequestEnterRoom(update_data)
         self.SendDataToServer(cs_enter_room_data.real_data)
 
     def OnInformEnterRoom(self, data):
-        # print("OnInformEnterRoom： %s" % data)
         if data['error_code'][1] is 0:
             self.seat_id = data['seat_id'][1]
             if self.homeowner:
-                logging.info("房间通知： 玩家: {0} 进入房间，房间号是: {1}, 座位号是: {2}".format(self.user_mid, self.room_id, self.seat_id))
-                print("房间通知： 玩家: {0} 进入房间，房间号是: {1}, 座位号是: {2}".format(self.user_mid, self.room_id, self.seat_id))
+                Log_outPut("房间通知： 玩家: {0} 进入房间，房间号是: {1}, 座位号是: {2}".format(self.user_mid, self.room_id, self.seat_id))
+
             else:
-                logging.info("房间通知： 玩家: {0} 进入房间，座位号是: {1}".format(self.user_mid, self.seat_id))
-                print("房间通知： 玩家: {0} 进入房间，座位号是: {1}".format(self.user_mid, self.seat_id))
+                Log_outPut("房间通知： 玩家: {0} 进入房间，座位号是: {1}".format(self.user_mid, self.seat_id))
 
             print()
             #   准备游戏
-            if self.SetGameType in self.GameNameList:
+            if self.SetGameType in self.RunfastGameNameList:
                 print("{},准备开始".format(self.user_mid))
                 self.RunfastReady()
             elif self.SetGameType in self.MajiangGameNameList:
@@ -466,6 +490,25 @@ class UserBehavior(object):
                 self.MajiangReady()
             else:
                 self.ReadyGame()
+        else:
+            self.enterRoomError = True
+            if data['error_code'][1] is -3:
+                Log_outPut("进入房间失败: 在黑名单中")
+            elif data['error_code'][1] is -2:
+                Log_outPut("进入房间失败: 房间不存在")
+            elif data['error_code'][1] is -6:
+                Log_outPut("进入房间失败: 房间已满人")
+            elif data['error_code'][1] is -19:
+                Log_outPut("进入房间失败: 版本不一致")
+            else:
+                Log_outPut("房间通知： 加入房间失败:{}".format(data["error_code"][1]))
+
+
+    def sc_paohuzi_jiaochui(self,data):
+        self.paohuzi_broadcast_jiaochui = True
+        Log_outPut("服务器通知: 请选择是否加锤!")
+
+
 
     def RunfastReady(self):
         RunfastReady_data = CSRequestReadyRunfast()
@@ -498,13 +541,8 @@ class UserBehavior(object):
     def OnInformDissolveRoom(self, data):
         if not self.homeowner:
             self.ToVoteDissolveRoom()
+            Log_outPut("房间通知： 玩家: {0} 发起解散房间申请.".format(self.user_mid))
 
-        # if data['mid'][1] != self.user_mid:
-        #     #   同意解散
-        #     self.ToVoteDissolveRoom()
-        # else:
-        logging.info("房间通知： 玩家: {0} 发起解散房间申请.".format(self.user_mid))
-        print("房间通知： 玩家: {0} 发起解散房间申请.".format(self.user_mid))
 
     def ToVoteDissolveRoom(self, opinion=1):
         update_data = {"vote_opinion": opinion}
@@ -513,8 +551,7 @@ class UserBehavior(object):
 
     def OnVoteDissolveRoom(self, data):
         if data['mid'][1] != self.user_mid:
-            logging.info("房间通知： 玩家: {0} 同意解散房间.".format(self.user_mid))
-            print("房间通知： 玩家: {0} 同意解散房间.".format(self.user_mid))
+            Log_outPut("房间通知： 玩家: {0} 同意解散房间.".format(self.user_mid))
 
     def ApplyLeaveRoom(self):
         cs_leave_room_data = CSLeaveRoom()
@@ -525,11 +562,10 @@ class UserBehavior(object):
             if data['error_code'][1] == -17:
                 self.last_room_id = 0
                 self.dissolve_state = True  # 解散状态
-                logging.info("房间通知： 玩家: {0} 通过解散房间离开.".format(data['mid'][1]))
-                print("房间通知： 玩家: {0} 通过解散房间离开.".format(data['mid'][1]))
+                Log_outPut("房间通知： 玩家: {0} 通过解散房间离开.".format(data['mid'][1]))
+
             else:
-                logging.info("房间通知： 玩家: {0} 打完牌局后离开房间.".format(data['mid'][1]))
-                print("房间通知： 玩家: {0} 打完牌局后离开房间.".format(data['mid'][1]))
+                Log_outPut("房间通知： 玩家: {0} 打完牌局后离开房间.".format(data['mid'][1]))
 
     def ReadyGame(self):
         cs_request_ready_data = CSRequestReady()
@@ -537,19 +573,15 @@ class UserBehavior(object):
 
     def OnReadyGame(self, data):
         if data['seat_id'][1] == self.seat_id:
-            logging.info("房间通知： {0} 号玩家: {1} 准备游戏.".format(self.seat_id, self.user_mid))
-            print("房间通知： {0} 号玩家: {1} 准备游戏.".format(self.seat_id, self.user_mid))
+            Log_outPut("房间通知： {0} 号玩家: {1} 准备游戏.".format(self.seat_id, self.user_mid))
 
     def OnGameStart(self, data):
         self.game_start = True
-        logging.info("房间通知： {0} 号玩家: {1} 开始游戏.".format(self.seat_id, self.user_mid))
-        logging.info("房间通知： 庄家座位号: %s" % data['banker_seat_id'][1])
-        print("房间通知： {0} 号玩家: {1} 开始游戏.".format(self.seat_id, self.user_mid))
-        print("房间通知： 庄家座位号: %s" % data['banker_seat_id'][1])
+        Log_outPut("房间通知： {0} 号玩家: {1} 开始游戏.".format(self.seat_id, self.user_mid))
+        Log_outPut("房间通知： 庄家座位号: %s" % data['banker_seat_id'][1])
 
     def OnInformLessMode(self, data):
-        logging.info("房間通知：少人模式返回參數: %s" % data['RoomInfo'])
-        print("房間通知：少人模式返回參數: %s" % data['RoomInfo'])
+        Log_outPut("房間通知：少人模式返回參數: %s" % data['RoomInfo'])
 
     def ApplyOpenLessMode(self):
         cs_request_ready_data = CSOpenLessMode()
@@ -557,8 +589,7 @@ class UserBehavior(object):
 
     def OnOpenLessMode(self, data):
         if data['ErrorCode'] == 0:
-            logging.info("房间通知： 少人模式开启成功, 参数如下: %s" % data)
-            print("房间通知： 少人模式开启成功, 参数如下: %s" % data)
+            Log_outPut("房间通知： 少人模式开启成功, 参数如下: %s" % data)
 
     def MakeCards(self, update_data):
         real_data = {"cards_list": ""}
@@ -566,10 +597,6 @@ class UserBehavior(object):
             for cards in data:
                 for card in cards:
                     real_data["cards_list"] += card
-
-        print("real_data： %s" % real_data)
-        # for k, v in update_data.items():
-        #     real_data["cards_list"] += v
 
         if len(list(real_data["cards_list"].replace(",", ""))) is not 160:
             return
@@ -611,6 +638,7 @@ class UserBehavior(object):
         if data['seat_id'][1] == self.seat_id:
             self.CanOperate = True
             AllOperate = []
+            self.paohuzi_Operate = AllOperate
             if self.room_type is RoomInfo().YiYang:
                 if data['is_LiuPai'][1] is 1:
                     AllOperate.append("溜")
@@ -627,8 +655,7 @@ class UserBehavior(object):
             if data['is_chu_card'][1] is 1:
                 AllOperate.append("出")
 
-            logging.info("玩家: %s, 座位号: %s, 当前可进行的操作有: %s" % (self.user_mid, self.seat_id, AllOperate))
-            print("玩家: %s, 座位号: %s, 当前可进行的操作有: %s" % (self.user_mid, self.seat_id, AllOperate))
+            Log_outPut("玩家: %s, 座位号: %s, 当前可进行的操作有: %s" % (self.user_mid, self.seat_id, AllOperate))
             print()
             if "胡" in AllOperate:
                 self.PlayerOperates({"function_type": 9, "card_num": 0, "function_index": self.serial})
@@ -641,43 +668,35 @@ class UserBehavior(object):
 
 
 
-
-
     def PlayerOperates(self, update_data):
+
         cs_request_function_data = CSRequestFunction(update_data)
         self.SendDataToServer(cs_request_function_data.real_data)
 
     def OnPlayerOperate(self, data):
+
         if data["error_code"][1] == -7 and data['seat_id'][1] == -100:
-            logging.info("房间通知: 出牌操作失败, 当前操作为非法操作. 联系开发或李佳.\n")
-            print("房间通知: 出牌操作失败, 当前操作为非法操作. 联系开发或李佳.\n")
+            Log_outPut("房间通知: 出牌操作失败, 当前操作为非法操作. 联系开发或李佳.\n")
             self.now_round_over = True
             return
         if data["error_code"][1] == -20 and data['seat_id'][1] == -100:
-            logging.info("房间通知: 出牌操作失败, 可能是当前手牌中没有此牌.\n")
-            print("房间通知: 出牌操作失败, 可能是当前手牌中没有此牌.\n")
+            Log_outPut("房间通知: 出牌操作失败, 可能是当前手牌中没有此牌.\n")
             self.now_round_over = True
             return
 
         if data["seat_id"][1] == self.seat_id:
             if data['do_function'][1] != 9:
                 if data['do_function'][1] == 7:
-                    logging.info("房间通知: 玩家: %s, 座位号: %s, < %s >, 牌型是: %s" % (
-                        self.user_mid, self.seat_id, GetOperateCH(data['do_function'][1]), data['_card'][1]))
-                    print("房间通知: 玩家: %s, 座位号: %s, < %s >, 牌型是: %s" % (
-                        self.user_mid, self.seat_id, GetOperateCH(data['do_function'][1]), data['_card'][1]))
+                    Log_outPut("房间通知: 玩家: %s, 座位号: %s, < %s >, 牌型是: %s" % (self.user_mid, self.seat_id, GetOperateCH(data['do_function'][1]), data['_card'][1]))
                 else:
-                    logging.info("房间通知: 玩家: %s, 座位号: %s, < %s >牌成功, 牌型是: %s" % (
-                        self.user_mid, self.seat_id, GetOperateCH(data['do_function'][1]), data['_card'][1]))
-                    print("房间通知: 玩家: %s, 座位号: %s, < %s >牌成功, 牌型是: %s" % (
+                    Log_outPut("房间通知: 玩家: %s, 座位号: %s, < %s >牌成功, 牌型是: %s" % (
                         self.user_mid, self.seat_id, GetOperateCH(data['do_function'][1]), data['_card'][1]))
             else:
-                logging.info("房间通知: 玩家: %s, 座位号: %s, < %s >牌成功." % (
+                Log_outPut("房间通知: 玩家: %s, 座位号: %s, < %s >牌成功." % (
                     self.user_mid, self.seat_id, GetOperateCH(data['do_function'][1])))
-                print("房间通知: 玩家: %s, 座位号: %s, < %s >牌成功." % (
-                    self.user_mid, self.seat_id, GetOperateCH(data['do_function'][1])))
-
-            print()
+        else:
+            if data["error_code"][1] != 0:
+              Log_outPut("操作回包错误码: %s" % data["error_code"][1])
 
     def ReplaceMingTang(self, data):
         switcher = {
@@ -836,123 +855,167 @@ class UserBehavior(object):
             print("房间通知: 当前操作有误, 错误码是: < %s >, 说明 -7 为非法操作, 参数错误. -20为出牌失败,可能是当前出的牌不在手牌中." % data["error_code"][1])
 
     def OperateApi(self, option, last_card="", card_types=None):
-        # start_time = time.time()
-        # while self.runfast_operation_id == None:
-        #     if start_time - time.time() >= 5:
-        #         break
-        #     time.sleep(0.01)
-        #
-        # print("runfast_operation_id: %s" % self.runfast_operation_id)
 
-        if self.SetGameType in self.GameNameList:
+        if self.createRoom_error is True:  #创房失败
+            return
+
+        if self.SetGameType in self.RunfastGameNameList:   #跑得快玩法
+            start = time.time()
+            while self.runfast_operation_id is None:
+                if time.time() - start > 5:
+                    Log_outPut("runfast_operation_id 5s not found")
+                    break
+                time.sleep(0.005)
             if option == "出":
                 time.sleep(3)
                 print("准备chupai: %s" % self.runfast_operation_id)
-                self.runfastOutCard(self.runfast_operation_id ,['3s'])
+                self.runfastOutCard(self.runfast_operation_id ,card_types) #['3s']
 
-        elif self.SetGameType in self.MajiangGameNameList:
+
+        elif self.SetGameType in self.MajiangGameNameList:   #麻将玩法
+            start = time.time()
+            while self.majiang_operate_id is None:
+                if time.time() - start > 5:
+                    Log_outPut("majiang_operate_id  5s not found")
+                    break
+                time.sleep(0.005)
 
             if option == "出":
+                Log_outPut("{} 准备出牌:{}".format(self.user_mid,card_types))
                 while self.can_operate_start is False:
                     time.sleep(0.005)
-                while self.majiang_operate_id is None:
-                    time.sleep(0.005)
-                self.outCardMajiang(card_types, self.majiang_operate_id)
+                self.outCardMajiang(card_types[0], self.majiang_operate_id)
                 self.majiang_operate_id = None
             elif option == "吃":
-                while self.majiang_operate_id is None:
-                    time.sleep(0.005)
-                self.OnChiMajiang(card_types, self.majiang_operate_id)
+                Log_outPut("{} 准备吃牌:{}".format(self.user_mid, card_types))
+                self.OnChiMajiang(card_types[0], self.majiang_operate_id)
                 self.majiang_operate_id = None
             elif option == "碰":
-                while self.majiang_operate_id is None:
-                    time.sleep(0.005)
-
+                Log_outPut("{} 准备碰牌".format(self.user_mid,))
                 self.OnPengMajiang(self.majiang_operate_id)
                 self.majiang_operate_id = None
             elif option == "杠":
-                while self.majiang_operate_id is None:
-                    time.sleep(0.005)
-
-                self.OnGangMajiang(card_types, self.majiang_operate_id)
+                Log_outPut("{} 准备杠牌:{}".format(self.user_mid, card_types))
+                self.OnGangMajiang(card_types[0], self.majiang_operate_id)
                 self.majiang_operate_id = None
             elif option == "胡":
-                while self.majiang_operate_id is None:
-                    time.sleep(0.005)
+                Log_outPut("{} 准备胡牌".format(self.user_mid,))
                 self.OnHuMajiang(self.majiang_operate_id)
             elif option == "过":
-                while self.majiang_operate_id is None:
-                    time.sleep(0.005)
+                Log_outPut("{} 准备选择过牌".format(self.user_mid))
                 self.OnCancelMajiang(self.majiang_operate_id)
                 self.majiang_operate_id = None
             elif option == "补杠":
-                while self.majiang_operate_id is None:
-                    time.sleep(0.005)
-                self.OnBuMajiang(card_types,self.majiang_operate_id)
+                Log_outPut("{} 准备选择补杠".format(self.user_mid))
+                self.OnBuMajiang(card_types[0],self.majiang_operate_id)
                 self.majiang_operate_id = None
             elif option == "飘分":
-                while self.majiang_piao is None:
-                    time.sleep(0.005)
+                Log_outPut("{} 准备选择:飘分".format(self.user_mid))
                 self.OnPiaoMajiang(score=card_types,operation_sign=self.majiang_piao)
             elif option == "加锤":
-                while self.majiang_chui is None:
-                    time.sleep(0.005)
                 if last_card not in [0,"不加锤","不",'No']:
                     self.OnChuiMajiang(1,self.majiang_chui)
                 else:
                     self.OnChuiMajiang(0, self.majiang_chui)
 			
 
+        else:         #跑胡子玩法
 
 
+            if self.enterRoomError is True: #加入房间失败
+                return
 
-        else:
             if option in ["跑", "提", "偎"]:
-                print("此操作 <%s> 由服务器主动执行, 等待服务器执行中." % option)
+                Log_outPut("此操作 <%s> 由服务器主动执行, 等待服务器执行中." % option)
                 return
-            while not self.CanOperate:
-                time.sleep(0.5)
+            if option == "加锤":
+                start = time.time()
+                while self.paohuzi_broadcast_jiaochui is False:
+                    if time.time() - start > 5:
+                        Log_outPut("paohuzi_broadcast_jiaochui 5s not found")
+                        break
+                    time.sleep(0.005)
+                if card_types =="是":
+                    self.paohuzi_jiachui(1)
+                elif card_types == "否":
+                    self.paohuzi_jiachui(0)
+            else:
+                # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  客户端请求操作 <<<<<<<<<<<<<<<<<<<<<<
+                start = time.time()
+                while len(self.paohuzi_Operate) is 0:
+                    if time.time() - start > 5:
+                        Log_outPut("{}: paohuzi_Operate<可操作动作> 5s not found".format(self.user_mid))
+                        break
+                    time.sleep(0.005)
+                #
 
-            self.CanOperate = False
-            operate = GetOperateID(option)
-            if card_types is None and option in [1, 11, 18, 19]:
-                print("操作为 <吃、出、溜、歪> 时, 应提供出牌牌型.")
-                return
+                if option not in self.paohuzi_Operate:
+                    Log_outPut("{}玩家当前操作“{}”错误，服务器提示能做的操作是: {}".format(self.user_mid, option, self.paohuzi_Operate))
+                    return
 
-            if operate in [1, 11, 18, 19]:
-                operate_data = None
-                if operate == 1:
-                    operate_card = self.GetCardsStruct(card_types)
-                    for card in operate_card:
-                        if last_card in card:
-                            operate_card.remove(card)
+                # self.CanOperate = False
+                # operate = GetOperateID(option)
+                # if card_types is None and option in [1, 11, 18, 19]:
+                #     Log_outPut("操作为 <吃、出、溜、歪> 时, 应提供出牌牌型.")
+                #     return
+                #
+
+                operate = GetOperateID(option)  # 2 碰 ； 9 胡 ；10 过牌
+                if operate in [2, 9, 10]:
+                    start = time.time()
+                    while self.serial is None:
+                        if time.time() - start > 5:
+                            Log_outPut("{}: Paohuzi<操作序列号> 5s not found".format(self.user_mid))
                             break
+                        time.sleep(0.005)
 
-                    operate_data = {"function_type": operate, "card_num": len(operate_card), "_card": operate_card,
-                                    "function_index": self.serial}
+                    operate_data = {"function_type": operate, "card_num": 0, "function_index": self.serial}
+                    self.serial = None
 
-                elif operate == 11:
-                    operate_card = card_types[0]
-                    operate_data = {"function_type": operate, "card_num": len(card_types), "_card": operate_card,
-                                    "function_index": self.serial}
+                    self.PlayerOperates(operate_data)
 
-                elif operate == 18:
-                    pass
+                '''跑胡子，出牌，吃牌等都是小写'''
 
-                elif operate == 19:
-                    pass
+                if operate in [1, 11, 18, 19]:
+                    operate_data = None
+                    if operate == 1:   # 吃牌
+                        operate_card = self.GetCardsStruct(card_types)
+                        for card in operate_card:
+                            if last_card in card:
+                                operate_card.remove(card)
+                                break
 
-                else:
-                    print("玩家通知: 操作为 %s 的接口有误." % operate)
-                self.serial = None
-                self.PlayerOperates(operate_data)
+                        operate_data = {"function_type": operate, "card_num": len(operate_card), "_card": operate_card,
+                                        "function_index": self.serial}
 
-            elif operate in [2, 9, 10]:
-                operate_data = {"function_type": operate, "card_num": 0, "function_index": self.serial}
-                self.serial = None
-                self.PlayerOperates(operate_data)
+                    elif operate == 11:                #出牌
+                        operate_card = card_types[0]
+                        operate_data = {"function_type": operate, "card_num": 1, "_card": operate_card.lower(),
+                                        "function_index": self.serial}
+
+                    elif operate == 18:
+                        pass
+
+                    elif operate == 19:
+                        pass
+
+                    else:
+                        print("玩家通知: 操作为 %s 的接口有误." % operate)
+                    self.serial = None
+                    self.PlayerOperates(operate_data)
 
 
+
+    def paohuzi_jiachui(self,jiaochui):
+        data = {
+            "is_jiachui": jiaochui
+        }
+        cs_jiaochui_data = CSPaohuziJiaChui(data)
+
+        self.SendDataToServer(cs_jiaochui_data.real_data)
+    def sc_paohuzi_isJiachui(self,data):
+        if self.homeowner:
+            Log_outPut("{}号玩家加锤选择：{} <1表示加锤，0表示不加锤> ".format(data['seat_id'][1],data['is_option'][1]))
 
 
     def GetCardsStruct(self, card_data):
@@ -1043,19 +1106,19 @@ class UserBehavior(object):
                 "card_num": len(cards),
                 "card_info":cards
                 }
-        print("跑得快出牌数据",data)
         out_card_data = CSOutCardRunfast(data)
-        print("出: %s" % out_card_data.real_data)
         self.SendDataToServer(out_card_data.real_data)
 
 
 
     def sc_runfast_BroadcastGameStart(self,data):
-        print("跑得快游戏开始",data)
+        if data["err"][1] is 0:
+            Log_outPut("跑得快游戏开始")
+
 
 
     def sc_runfast_dissolveRoom(self,data):
-        print("跑得快发起解散房间", data,self.user_mid)
+        Log_outPut("跑得快---<{}>发起解散房间 ".format(self.user_mid))
         if not self.homeowner:
             self.ChoseDissolveRoomRunfast()
 
@@ -1064,49 +1127,48 @@ class UserBehavior(object):
         print("跑得快发牌数据", data)
 
     def sc_runfast_operation(self,data):
-        print("@@@@",data,)
-        print("######",(data['Operation_id'])[:len(data['Operation_id']) - 1])
-
         self.runfast_operation_id = data['Operation_id'][:len(data['Operation_id']) - 1]
         if data['seat_id'] == self.seat_id:
-            print("玩家: %s 接收跑得快通知用户做相应的操作: %s" % (data['seat_id'], data))
-            print("序列号: %s" % self.runfast_operation_id)
+            Log_outPut("玩家: %s 接收跑得快通知用户做相应的操作: %s" % (data['seat_id'], data))
+
 
     def sc_runfast_dissolveroomInfo(self,data):
         if data['err'][1] is 0:
             print("{}同意解散房间".format(self.user_mid))
 
     def sc_runfast_outcard(self,data):
-        print('出牌回包数据',data)
         err = int(data["err"][1])
         if err > 0:
             logging.info("{}玩家出牌成功".format(self.user_mid))
         else:
             if err is -1:
-                logging.info("无效操作")
+                Log_outPut("无效操作")
             elif err is -2:
-                logging.info("牌数据错误，手牌中没有")
+                Log_outPut("牌数据错误，手牌中没有")
             elif err is -3:
-                logging.info("下一家只剩下一张牌，上家出单牌时，必须是手牌中最大的")
+                Log_outPut("下一家只剩下一张牌，上家出单牌时，必须是手牌中最大的")
             elif err is -4:
-                logging.info("牌数据错误，牌型无效")
+                Log_outPut("牌数据错误，牌型无效")
             elif err is -5:
-                logging.info("牌数据错误，牌型错误")
+                Log_outPut("牌数据错误，牌型无效")
             elif err is -6:
-                logging.info("牌数据错误，牌型错误")
+                Log_outPut("自己非当前操作玩家")
             elif err is -7:
-                logging.info("黑桃3必须先出")
+                Log_outPut("黑桃3必须先出")
             elif err is -8:
-                logging.info("炸弹不可拆")
+                Log_outPut("炸弹不可拆")
 
 
     def sc_runfast_settleAccountSmall(self,data):
-        print("跑得快小局结算数据: %s"%data)
-
+        if self.homeowner is True:
+            for k, v in data["players_info"][1].items():
+                Log_outPut("<小局结算>{}玩家当前局数分数:{}，座位分数为：{}".format(v["mid"], v["score"], v["seat_score"]))
 
     def sc_runfast_settleAccountBig(self,data):
-        print("跑得快大局结算数据: %s"%data)
-
+        if self.homeowner is True:
+            for k, v in data["Playing_info"][1].items():
+                Log_outPut("<大局结算>{} 座位分数为：{}，炸弹次数: {}，赢的局数：{}，输的局数：{}，历史最高得分：{}".format(v["mid"], v["seat_score"], v["bomb_num"],
+                                                                                                                    v["win_num"],v["lose_num"],v["top_score"]))
 
 
     def sc_runfast_bennDisband(self,data):
@@ -1185,14 +1247,12 @@ class UserBehavior(object):
 
     def sc_majiang_dissolve(self,data):
         if data['err'] is 0:
-            print("座位ID为{}：发起解散房间".format(data['seat_id']))
-            logging.info("座位ID为{}：发起解散房间".format(data['seat_id']))
+            Log_outPut("座位ID为{}：发起解散房间".format(data['seat_id']))
+
             if self.user_mid != self.homeowner:
                 self.Room_dissolve_majiang()
 
-
     def sc_majiang_beenDisband(self,data):
-        # print("麻将解散服务器应答: %s" % data)
         logging.info("麻将解散服务器应答: %s" % data)
     def sc_majiang_gameStart(self,data):
         if data['err'][1] is 0:
@@ -1201,8 +1261,7 @@ class UserBehavior(object):
             print("麻将游戏失败")
 
     def sc_majiang_userCard(self,data):
-
-        print(" {user}用户牌: {card}".format(user=self.user_mid,card=data['hand_cards'][1]))
+        Log_outPut("{user}用户牌: {card}".format(user=self.user_mid,card=data['hand_cards'][1]))
 
     def sc_majiang_nextPlayer(self,data):
         self.can_operate_start = True
@@ -1214,11 +1273,11 @@ class UserBehavior(object):
 
     def sc_majiang_responseDissolve(self,data):
         if data['err'][1 is 0:]:
-            logging.info("房间已解散")
-            print("房间已解散")
+            self.Room_dissolve_majiang()
+            Log_outPut("房间已解散")
+            
         else:
-            logging.info("房间未解散")
-            print("房间未解散")
+            Log_outPut("房间未解散")
 
 
 
@@ -1267,55 +1326,55 @@ class UserBehavior(object):
 
     def sc_majiang_OnPlay(self,data):
         if data["Error"][1] in [1,2,3,4]:
-            print("{}号玩家出牌{}成功".format(data["Error"][1],data["Card"][1]))
+            Log_outPut("{}号玩家出牌{}成功".format(data["Error"][1],data["Card"][1]))
             logging.info("{}号玩家出牌{}成功".format(data["Error"][1], data["Card"][1]))
             self.can_operate_start = False
             self.majiang_operate_id = None
         else:
-            print("出牌失敗(error: {})".format(data['Error']))
+            Log_outPut("出牌失敗(error: {})".format(data['Error']))
 
 
     def sc_majiang_OnChi(self,data):
-        print("麻将吃牌回包: %s" % data)
+        Log_outPut("麻将吃牌回包: %s" % data)
 
 
     def sc_majiang_OnPeng(self,data):
         if data["Error"][1] in [1,2,3,4]:
-            print("{}号玩家碰牌{}成功".format(data["Error"][1],data["by_card"][1]))
+            Log_outPut("{}号玩家碰牌{}成功".format(data["Error"][1],data["by_card"][1]))
             logging.info("{}号玩家碰牌{}成功".format(data["Error"][1],data["by_card"][1]))
         else:
-            print("碰牌失敗(error: {})".format(data['Error']))
+            Log_outPut("碰牌失敗(error: {})".format(data['Error']))
 
 
     def sc_majiang_OnGang(self,data):
-        print("麻将杠牌回包: %s" % data)
+        Log_outPut("麻将杠牌回包: %s" % data)
 
 
     def sc_majiang_OnHu(self,data):
-        print("麻将胡牌回包: %s" % data)
+        Log_outPut("麻将胡牌回包: %s" % data)
 
 
     def sc_majiang_OnCancle(self,data):
         if data["Error"][1] < 0:
-            print("{}过牌失败".format(self.user_mid))
+            Log_outPut("{}过牌失败".format(self.user_mid))
             logging.info("{}过牌失败".format(self.user_mid))
         else:
-            print("{}选择过牌成功".format(self.user_mid))
+            Log_outPut("{}选择过牌成功".format(self.user_mid))
 
     def sc_majiang_MoCard(self,data):
-        print("{}号玩家摸牌: {}".format(data['seat_id'][1],data["card"][1]))
-        logging.info("{}号玩家摸牌: {}".format(data['seat_id'][1],data["card"][1]))
+        Log_outPut("{}号玩家摸牌: {}".format(data['seat_id'][1],data["card"][1]))
+
 
     def sc_majiang_OnBu(self,data):
         if data["ErrorCode"] in [1,2,3,4]:
-            print("{}号玩家补杠: {}".format(data["ErrorCode"],data["Card"]))
+            Log_outPut("{}号玩家补杠: {}".format(data["ErrorCode"],data["Card"]))
             logging.info("{}号玩家补杠: {}".format(data["ErrorCode"],data["Card"]))
         else:
-            print("补牌失败(error: {})".format(data["ErrorCode"]))
+            Log_outPut("补牌失败(error: {})".format(data["ErrorCode"]))
 
     def sc_majiang_piaofen(self,data):
-        print("{}号玩家选择飘{}分".format(data['seat_id'][1],data['piaoScore'][1]))
-        logging.info("{}号玩家选择飘{}分".format(data['seat_id'][1],data['piaoScore'][1]))
+        Log_outPut("{}号玩家选择飘{}分".format(data['seat_id'][1],data['piaoScore'][1]))
+
 
     def sc_majiang_broadcast_piao(self,data):
         self.majiang_piao = data["operation_sign"][1][:-1]
@@ -1326,14 +1385,12 @@ class UserBehavior(object):
     def sc_majiang_chui(self,data):
         if data["ErrorCode"][1] in [1,2,3,4]:
             if data["chui"][1] is 1:
-                print("{}号玩家选择加锤".format(data["ErrorCode"][1]))
-                logging.info("{}号玩家选择加锤".format(data["ErrorCode"][1]))
+                Log_outPut("{}号玩家选择加锤".format(data["ErrorCode"][1]))
+
             else:
-                print("{}号玩家选择不加锤".format(data["ErrorCode"][1]))
-                logging.info("{}号玩家选择不加锤".format(data["ErrorCode"][1]))
-        else:
-            print("Error: {}".format(data))
-            logging.log("Error: {}".format(data))
+                Log_outPut("{}号玩家选择不加锤".format(data["ErrorCode"][1]))
+
+            Log_outPut("Error: {}".format(data))
 
 
 

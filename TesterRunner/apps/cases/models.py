@@ -43,6 +43,7 @@ class ReportProfile(models.Model):
     r_name = models.CharField(max_length=200, null=True, verbose_name="报告名字")
     objects = models.Manager()
     class Meta:
+        ordering = ('-r_end_time',)  #时间倒序存在
         db_table = 't_report'
         verbose_name = 'ReportProfile'
 

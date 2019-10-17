@@ -38,6 +38,8 @@ urlpatterns = [
     path('club/', include('apps.club.urls', namespace='apps.club')),
     path('configuration/', include('apps.configuration.urls', namespace='apps.configuration')),
     path('versions/', include('apps.versions.urls', namespace='apps.versions')),
+    path('testReport/', include('apps.testReport.urls', namespace='apps.testReport')),
+    path('log/', include('apps.log.urls', namespace='apps.log')),
 
 ]
 

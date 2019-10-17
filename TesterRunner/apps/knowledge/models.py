@@ -53,6 +53,7 @@ class AddCase(models.Model):
     t_pass = models.CharField(max_length=1000, verbose_name="是否通过")
     t_effective = models.CharField(max_length=1000, verbose_name="是否有效")
     t_remark = models.CharField(max_length=100, verbose_name="备注",null=True)
+    t_username = models.CharField(max_length=30, verbose_name="提交人")
     class Mete:
         db_table = "t_case"
         verbose_name = 'AddCaseProfile'

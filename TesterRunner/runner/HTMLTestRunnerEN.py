@@ -564,7 +564,10 @@ class HTMLTestRunner(Template_mixin):
         Return report attributes as a list of (name, value).
         Override this to add custom attributes.
         """
-        startTime = str(self.startTime)[:19]
+        now_time = time.strftime('%Y-%m-%d %H%M%S', time.localtime(time.time()))
+        # now_time = time.time()
+        startTime = str(now_time)
+
         duration = str(self.stopTime - self.startTime)
         status = []
         status.append('ALL %s' % (result.success_count + result.failure_count + result.error_count))

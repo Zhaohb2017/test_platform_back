@@ -27,7 +27,7 @@ def Add_Versions(request):
 
 def GetAllVersions():
     _set = []
-    _list = AddVersions.objects.all()
+    _list = AddVersions.objects.all().order_by('-id')
     for bug in _list:
         _set.append({
             "t_id":bug.id,

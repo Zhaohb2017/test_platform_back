@@ -28,7 +28,7 @@ SECRET_KEY = '9q@17=qg(rsox3jrxvxci!=)axyc+2r-)8wv(dvkoxchy1mb=&'
 DEBUG = True
 
 #	监听允许的网关
-ALLOWED_HOSTS = ['localhost','0.0.0.0:8000','127.0.0.1', '192.168.3.32']
+ALLOWED_HOSTS = ['localhost','0.0.0.0:8000','127.0.0.1', '192.168.1.161','192.168.1.109']
 
 AUTH_USER_MODEL = 'users.UserProfile'
 
@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     "apps.club",
     "apps.configuration",
     "apps.versions",
+    "apps.testReport",
+    "apps.log"
 ]
 
 MIDDLEWARE = [
@@ -95,14 +97,13 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'backup_db',
+        'NAME': 'trdb',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': '192.168.3.32',
+        'HOST': '127.0.0.1',
         'PORT': '3306'
     }
 }
-
 
 
 # Password validation

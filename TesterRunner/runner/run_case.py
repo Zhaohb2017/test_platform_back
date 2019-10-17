@@ -3,12 +3,16 @@ import sys
 import time
 import smtplib
 import unittest
+import signal
+import logging
 import HTMLTestRunnerEN
 from email.utils import parseaddr, formataddr
 from email.header import Header
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
+
+import psutil
 
 # 用例路径
 case_path = os.path.join(os.getcwd(), "/home/phonetest/gale/TesterRunner/runner/testcases/")
@@ -60,18 +64,20 @@ def sendMail(file_new):
     smtp.quit()
 
 if __name__ == '__main__':
+
     params = sys.argv
     print("params: %s" % params)
-
     _file = params[1].split("/")[-1]
-    print("_file: %s" % _file)
+    # logging.info("_file: %s" % _file)
     report_name = params[2]
     report_title = u"%s自动化测试报告" % report_name.split("_")[0]
     # 1、获取当前时间，这样便于下面的使用。
-    now = time.strftime("%Y_%m_%d_%H_%M_%S", time.localtime(time.time()))#-%H_%M_%S
+    now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))#-%H_%M_%S
 
-    # 2、html报告文件路径
+    # 2、html报告文件路径   #report_name
     report_abspath = os.path.join(report_path, report_name)
+
+    # logging.info("报告存放路径,",report_abspath)
 
     # 3、打开一个文件，将result写入此file中
     fp = open(report_abspath, "wb")
@@ -80,6 +86,8 @@ if __name__ == '__main__':
     print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     runner.run(all_case(_file))
     fp.close()
+    os.kill(os.getpid(), signal.SIGTERM)  # linux kill pid
+
 
     #5.发送报告邮件
     # sendMail(report_abspath)

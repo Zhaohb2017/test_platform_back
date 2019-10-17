@@ -6,6 +6,9 @@ app_name = 'apps.knowledge'
 urlpatterns = [
     path('k_add', views.AddCasePoint),
     path('k_list', views.QueryTestPoint),
+    path('k_update', views.UpdateTestPoint),
+    path('k_search', views.SearchTestPoint),
+
     path('k_del', views.DeleteTestPoint),        #删除测试点
     path('add_case', views.AddTestCase),         #添加测试用例
     path('case_list', views.QueryTestCase),      #测试用例列表

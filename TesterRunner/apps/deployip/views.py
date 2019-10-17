@@ -48,7 +48,14 @@ def Send(request):
         if on == "true":
             card = conversion_list(card)
 
-        comm = "cd {path}/; echo '{data}' >{file}".format(path=path, data=card, file=filename)
+
+
+        if type(card) is str:
+            card = data_dict(eval(card))
+
+        print("ffffffffff", card, type(card))
+
+        comm = "cd {path}/; echo '{data}' >{file}".format(path=path, data=str(card), file=filename)
         ssh = ssh_connect(ip=str(ip), port=int(port), user=str(user), pswd=str(pwd), command=comm)
      
         if ssh is True:
@@ -62,7 +69,7 @@ def Send(request):
 
 def GetDeployIP():
     _set = []
-    _list = DeployIP.objects.all()
+    _list = DeployIP.objects.all().order_by('-id')
     for ip in _list:
         _set.append({
             "t_id":ip.id,
@@ -70,7 +77,7 @@ def GetDeployIP():
             't_port': ip.t_port,
             "t_user":ip.t_user,
             "t_pwd": ip.t_pswd,
-            "t_path": ip.t_path,
+            "t_path": eval(ip.t_path),
             "t_filename": ip.t_filename,
             't_remark': ip.t_remark,
         })

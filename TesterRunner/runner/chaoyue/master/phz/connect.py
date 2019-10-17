@@ -11,6 +11,8 @@ import time
 import asyncio
 import socket
 import struct
+import os
+import signal
 from threading import Thread
 from runner.logger import *
 
@@ -103,7 +105,11 @@ class Connecter(asyncio.Protocol):
         self.transport = transport
 
     def connection_close(self):
-        self.connect_task.cancel()
+        
+        self.event_loop.stop()
+
+        # os.kill(os.getpid(), signal.SIGTERM)  # linux kill pid
+        # self.connect_task.cancel()
 
     def close_loop(self):
         loop_close(self.event_loop)
@@ -129,6 +135,8 @@ class Connecter(asyncio.Protocol):
                 #  如果是0说明正在读包头. 读完包头的数据，如果发现包体长度是0的话, 说明此包结构体是空的，需要直接退出，不读此包
                 if self.cur_packet_len == 0:
                     if read_packet_is_0_state:
+                        if self.protocol_num == 1058:
+                            self.on_protocol_handle(self.protocol_num, '')
                         break
                     if recv_buffer_len < self.pack_head_length:
                         break
@@ -151,10 +159,10 @@ class Connecter(asyncio.Protocol):
                     self.recvBuffer = self.recvBuffer[self.pack_head_length + self.cur_packet_len:]
                     self.cur_packet_len = 0
                     if self.protocol_num is not None:
-                        send_thread = Thread(target=self.on_protocol_handle, args=(self.protocol_num, body_data))
-                        send_thread.start()
-                        #   转发数据做处理
-                        # print("self.protocol_num: %s, body_data: %s, %s" % (self.protocol_num, body_data, len(body_data)))
+                        self.on_protocol_handle(self.protocol_num, body_data)
+                        # send_thread = Thread(target=self.on_protocol_handle, args=(self.protocol_num, body_data))
+                        # send_thread.start()
+
 
     #   连接中断标志
     def connection_lost(self, exc):

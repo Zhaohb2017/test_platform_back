@@ -11,3 +11,16 @@ def ssh_connect(ip,port,user,pswd,command):
         return e
     return True
 
+def data_dict(a):
+    '''数据换行'''
+    data = "{"
+    for k, v in a.items():
+        data += '"%s"' % k + ':['
+        for i in range(len(v)):
+            data += '"%s"' % v[i]
+            if i != len(v) - 1:
+                data += ","
+        data += "],\n"
+    data += "}"
+    return  data
+

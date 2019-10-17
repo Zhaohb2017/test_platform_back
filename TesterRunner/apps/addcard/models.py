@@ -19,3 +19,4 @@ class AddGameCard(models.Model):
     def __unicode__(self):
         return self.c_card
 
+

@@ -63,6 +63,7 @@ class DefineProtocol:
     PAO_HU_ZI_SC_NOT_IN_ROOM = 1043  # 不在房间中，不能进行操作
     PAO_HU_ZI_SC_GAME_SERVER_TRUSTEESHIP = 1053  # 游戏服托管
     PAO_HU_ZI_SC_MAKE_CARDS_TYPE = 1057  # 测试专用做牌
+    PAO_HU_ZI_SC_IS_JIACHUI = 1059  # 玩家选择是否加锤
     PAO_HU_ZI_SC_CREATED_GAME_LIST = 1100  # 已创建的比赛
     PAO_HU_ZI_SC_CLUB_GAME_LIST = 1101  # 所在俱乐部比赛
     PAO_HU_ZI_SC_CHANGE_GOLD_COINS = 1086  # 金币改变
@@ -89,6 +90,7 @@ class DefineProtocol:
     PAO_HU_ZI_SC_READY = 5005                   # 跑得快用户准备
     PAO_HU_ZI_SC_GAMESTART = 5007               # 服务器广播游戏开始
     PAO_HU_ZI_SC_DISSOLVERUNFAST = 5008         #客户端发起解散房间
+    PAO_HU_ZI_SC_JIACHUI   = 1058               # 广播选择加锤
     RUNFAST_REQUEST_LEAVE_ROOM = 5009                    #用户请求离开房间
     RUNFAST_OPERATION = 5022                        #通知用户做相应的操作
     RUNFAST_DISSOLVEROOM = 5012
@@ -203,12 +205,14 @@ class ProtocolClassify:
                                        DefineProtocol.PAO_HU_ZI_SC_PLAYER_CAN_DO_YIYANG: [SCPlayerCanDoYiYang, 'sc_player_can_do_yiyang'],
                                        DefineProtocol.PAO_HU_ZI_SC_SERVER_PUSH_GOD_CARDS: [SCServerPushGodCards, 'sc_server_push_god_cards'],
                                        DefineProtocol.PAO_HU_ZI_SC_PUSH_CHOU_CARD_YIYANG: [SCSmellyCard, 'sc_smelly_card_yiyang'],
+                                       DefineProtocol.PAO_HU_ZI_SC_IS_JIACHUI: [SCPaohuziJiaChui,"sc_paohuzi_isJiachui"],
 
                                        1093: [SCInformLessMode, "OnInformLessMode"],
                                        1094: [SCOpenLessMode, "OnOpenLessMode"],
                                        DefineProtocol.PAO_HU_ZI_SC_SEND_CARDS_RUNFAST: [SCSendCardsRunfast,'sc_runfast_sendCard'],
                                        DefineProtocol.PAO_HU_ZI_SC_NEXT_USER_OUTCARD: [SCNextUserRunfast,'sc_runfast_nextUser'],
                                        DefineProtocol.PAO_HU_ZI_SC_USER_OUTCARD: [SCOutCard,"sc_runfast_outcard"],
+                                       DefineProtocol.PAO_HU_ZI_SC_JIACHUI: [SCJiachui,"sc_paohuzi_jiaochui"],
                                        DefineProtocol.PAO_HU_ZI_SC_READY: [SCReady,"sc_runfast_ready"],
                                        DefineProtocol.PAO_HU_ZI_SC_GAMESTART: [SCBroadcastGameStart,'sc_runfast_BroadcastGameStart'],
                                        DefineProtocol.PAO_HU_ZI_SC_DISSOLVERUNFAST: [SCDissolveRoomFunfast,"sc_runfast_dissolveRoom"],
@@ -251,8 +255,8 @@ class UnPackData:
     def __init__(self):
         self.current_index = 0
         self.result = None
-        self.normal_entity_list = [1000, 1004,1006, 1008, 1010, 1013, 1014, 1016, 1017, 1019, 1020, 1035,
-                                   1042, 1043, 1053, 1047, 1057, 1086, 1998, 1999, 2001, 2002, 2009, 2010, 2026,2027,
+        self.normal_entity_list = [1000, 1004,1006, 1008, 1010, 1001,1013, 1014, 1016, 1017, 1019, 1020, 1035,
+                                   1042, 1043, 1053, 1047, 1057,1058,1059, 1086, 1998, 1999, 2001, 2002, 2009, 2010, 2026,2027,
                                    2029, 3035, 3040, 10022, 10080, 12026, 2030,5021,5023,5005,5007,5009,5012,5013,6009,6013,
                                    6005,6007,6044,6025,6012,6030,6033,6034,6035,6027,6021,6020,6052,6053
                                    ]
@@ -313,7 +317,8 @@ class UnPackData:
                         entity_data[i][1] = self.read_int32(need_parse_data[4: (8)])
                     if i == "seat_id":
                         entity_data[i][1] = self.read_int32(need_parse_data[8: (8 + 4)])
-            return entity_data
+                return entity_data
+
 
         elif protocol_num == 1005:
             print("1005协议号数据暂不解析")

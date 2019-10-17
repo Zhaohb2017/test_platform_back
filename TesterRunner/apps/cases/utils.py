@@ -222,6 +222,7 @@ def chaoyue_master_transform(play, options, operates, cards,mids):
         logging.info("fixed_code: {}, disconnect_code: {}".format(fixed_code,disconnect_code))
         # 修改操作数据，operate_code
         operate_code = transform_operate_data(play,operates)
+        print("ffffffffffffffffff",operate_code)
         return head_code, fixed_code, disconnect_code, operate_code
     except Exception as err:
         logging.info(err)
@@ -232,200 +233,195 @@ def chaoyue_master_transform(play, options, operates, cards,mids):
 # 将创房选项进行转换
 def transform_fixed_data(options, play, cards,mids):
     MajiangGameNameList = ["长沙麻将", "红中麻将", "转转麻将", "衡阳麻将", '新宁麻将', '邵阳麻将', '靖州麻将']
-    try:
-        logging.info("options: %s\n, play: %s\n,card: %s\n , mids: %s \n" % (options, play,cards,mids))
-        users = eval(mids)
-        user_mid = []
-        create_key = None
-        join_romm_type = 0
-        if play == "耒阳字牌":
-            create_key = "CreateRoomLeiYang(create_room_data)"
-        elif play == "益阳歪胡子":
-            create_key = "CreateRoomYiYang(create_room_data)"
-        else:
-            create_key = "CreateRoom(create_room_data)"
+    logging.info("options: %s\n, play: %s\n,card: %s\n , mids: %s \n" % (options, play,cards,mids))
+    users = eval(mids)
+    user_mid = []
+    create_key = None
+    join_romm_type = 0
+    if play == "耒阳字牌":
+        create_key = "CreateRoomLeiYang(create_room_data)"
+    elif play == "益阳歪胡子":
+        create_key = "CreateRoomYiYang(create_room_data)"
+    else:
+        create_key = "CreateRoom(create_room_data)"
 
-        for i in users:
-            user_mid.append(int(i))
-        if 'o_player' in options:
-            player_num = options['o_player']
-        else:
-            player_num = options['人数']
+    for i in users:
+        user_mid.append(int(i))
+    if 'o_player' in options:
+        player_num = options['o_player']
+    else:
+        player_num = options['人数']
 
-        if options["roomTypeVuale"] == "俱乐部创房":
-            join_romm_type = 1
+    if options["roomTypeVuale"] == "俱乐部创房":
+        join_romm_type = 1
 
-        if player_num != len(users):
-            return "用户mid 和选择人数不一致"
-        #     while not player1.now_round_over:\n
-        if player_num == 4:
-            fixed_code = '        player1 = UserBehavior({user1},{user1},True)\n' \
-                         '        player2 = UserBehavior({user2})\n' \
-                         '        player3 = UserBehavior({user3})\n' \
-                         '        player4 = UserBehavior({user4})\n' \
-                         '        time.sleep(2)\n' \
-                         '        player1.SetGameType = "{gameType}"\n' \
-                         '        player2.SetGameType = "{gameType}"\n' \
-                         '        player3.SetGameType = "{gameType}"\n' \
-                         '        player4.SetGameType = "{gameType}"\n' \
-                         '        create_room_data = {room_data}\n' \
-                         '        player1.{room_key}\n' \
-                         '        time.sleep(2)\n' \
-                         '        cards_data = {card_data}\n' \
-                         '        player1.MakeCards(cards_data)\n' \
-                         '        time.sleep(2)\n' \
-                         '        player2.ApplyEnterRoom(player1.room_id,{romm_type})\n' \
-                         '        player3.ApplyEnterRoom(player1.room_id,{romm_type})\n' \
-                         '        player4.ApplyEnterRoom(player1.room_id,{romm_type})\n'.format(user1=user_mid[0],
-                                                                                    user2=user_mid[1],
-                                                                                    user3=user_mid[2],
-                                                                                    user4=user_mid[3], gameType=play,
-                                                                                    room_data=options,
-                                                                                    room_key=create_key,
-                                                                                    card_data=cards,
-                                                                                    romm_type=join_romm_type
-                                                                                                )
-            disconnect_code = '        time.sleep(5)\n' \
-                              '        player1.ConnectClose()\n' \
-                              '        player2.ConnectClose()\n' \
-                              '        player3.ConnectClose()\n' \
-                              '        player4.ConnectClose()\n'
+    if player_num != len(users):
+        return "用户mid 和选择人数不一致"
+    #     while not player1.now_round_over:\n
+    if player_num == 4:
+        fixed_code = '        player1 = UserBehavior({user1},{user1},True)\n' \
+                     '        player2 = UserBehavior({user2})\n' \
+                     '        player3 = UserBehavior({user3})\n' \
+                     '        player4 = UserBehavior({user4})\n' \
+                     '        time.sleep(2)\n' \
+                     '        player1.SetGameType = "{gameType}"\n' \
+                     '        player2.SetGameType = "{gameType}"\n' \
+                     '        player3.SetGameType = "{gameType}"\n' \
+                     '        player4.SetGameType = "{gameType}"\n' \
+                     '        create_room_data = {room_data}\n' \
+                     '        player1.{room_key}\n' \
+                     '        time.sleep(2)\n' \
+                     '        cards_data = {card_data}\n' \
+                     '        player1.maker_card(cards_data,player1.room_id)\n' \
+                     '        time.sleep(2)\n' \
+                     '        player2.ApplyEnterRoom(player1.room_id,{romm_type})\n' \
+                     '        player3.ApplyEnterRoom(player1.room_id,{romm_type})\n' \
+                     '        player4.ApplyEnterRoom(player1.room_id,{romm_type})\n'.format(user1=user_mid[0],
+                                                                                user2=user_mid[1],
+                                                                                user3=user_mid[2],
+                                                                                user4=user_mid[3], gameType=play,
+                                                                                room_data=options,
+                                                                                room_key=create_key,
+                                                                                card_data=cards,
+                                                                                romm_type=join_romm_type
+                                                                                            )
+        disconnect_code = '        time.sleep(5)\n' \
+                          '        player1.ConnectClose()\n' \
+                          '        player2.ConnectClose()\n' \
+                          '        player3.ConnectClose()\n' \
+                          '        player4.ConnectClose()\n'
 
-        elif player_num == 3:
-            fixed_code = '        player1 = UserBehavior({user1},{user1},True)\n' \
-                         '        player2 = UserBehavior({user2})\n' \
-                         '        player3 = UserBehavior({user3})\n' \
-                         '        time.sleep(2)\n' \
-                         '        player1.SetGameType = "{gameType}"\n' \
-                         '        player2.SetGameType = "{gameType}"\n' \
-                         '        player3.SetGameType = "{gameType}"\n' \
-                         '        create_room_data = {room_data}\n' \
-                         '        player1.{room_key}\n' \
-                         '        time.sleep(2)\n' \
-                         '        cards_data = {card_data}\n' \
-                         '        player1.MakeCards(cards_data)\n' \
-                         '        time.sleep(2)\n' \
-                         '        player2.ApplyEnterRoom(player1.room_id,{romm_type})\n' \
-                         '        player3.ApplyEnterRoom(player1.room_id,{romm_type})\n'.format(user1=user_mid[0],
-                                                                                    user2=user_mid[1],
-                                                                                    user3=user_mid[2], gameType=play,
-                                                                                    room_data=options,
-                                                                                    room_key=create_key,
-                                                                                    card_data=cards,
-                                                                                    romm_type=join_romm_type)
-            disconnect_code = '        time.sleep(5)\n' \
-                              '        player1.ConnectClose()\n' \
-                              '        player2.ConnectClose()\n' \
-                              '        player3.ConnectClose()\n'
+    elif player_num == 3:
+        fixed_code = '        player1 = UserBehavior({user1},{user1},True)\n' \
+                     '        player2 = UserBehavior({user2})\n' \
+                     '        player3 = UserBehavior({user3})\n' \
+                     '        time.sleep(2)\n' \
+                     '        player1.SetGameType = "{gameType}"\n' \
+                     '        player2.SetGameType = "{gameType}"\n' \
+                     '        player3.SetGameType = "{gameType}"\n' \
+                     '        create_room_data = {room_data}\n' \
+                     '        player1.{room_key}\n' \
+                     '        time.sleep(2)\n' \
+                     '        cards_data = {card_data}\n' \
+                     '        player1.maker_card(cards_data,player1.room_id)\n' \
+                     '        time.sleep(2)\n' \
+                     '        player2.ApplyEnterRoom(player1.room_id,{romm_type})\n' \
+                     '        player3.ApplyEnterRoom(player1.room_id,{romm_type})\n'.format(user1=user_mid[0],
+                                                                                user2=user_mid[1],
+                                                                                user3=user_mid[2], gameType=play,
+                                                                                room_data=options,
+                                                                                room_key=create_key,
+                                                                                card_data=cards,
+                                                                                romm_type=join_romm_type)
+        disconnect_code = '        time.sleep(5)\n' \
+                          '        player1.ConnectClose()\n' \
+                          '        player2.ConnectClose()\n' \
+                          '        player3.ConnectClose()\n'
 
-        else:
-            fixed_code = '        player1 = UserBehavior({user1},{user1},True)\n' \
-                         '        player2 = UserBehavior({user2})\n' \
-                         '        time.sleep(2)\n' \
-                         '        player1.SetGameType = "{gameType}"\n' \
-                         '        player2.SetGameType = "{gameType}"\n' \
-                         '        create_room_data = {room_data}\n' \
-                         '        player1.{room_key}\n' \
-                         '        time.sleep(2)\n' \
-                         '        cards_data = {card_data}\n' \
-                         '        player1.MakeCards(cards_data)\n' \
-                         '        time.sleep(2)\n' \
-                         '        player2.ApplyEnterRoom(player1.room_id,{romm_type})\n'.format(user1=user_mid[0],
-                                                                                    user2=user_mid[1], gameType=play,
-                                                                                    room_data=options,
-                                                                                    room_key=create_key,
-                                                                                    card_data=cards,
-                                                                                    romm_type=join_romm_type)
-            
-            disconnect_code = '        time.sleep(5)\n' \
-                              '        player1.ConnectClose()\n' \
-                              '        player2.ConnectClose()\n'
+    else:
+        fixed_code = '        player1 = UserBehavior({user1},{user1},True)\n' \
+                     '        player2 = UserBehavior({user2})\n' \
+                     '        time.sleep(2)\n' \
+                     '        player1.SetGameType = "{gameType}"\n' \
+                     '        player2.SetGameType = "{gameType}"\n' \
+                     '        create_room_data = {room_data}\n' \
+                     '        player1.{room_key}\n' \
+                     '        time.sleep(2)\n' \
+                     '        cards_data = {card_data}\n' \
+                     '        player1.maker_card(cards_data,player1.room_id)\n' \
+                     '        time.sleep(2)\n' \
+                     '        player2.ApplyEnterRoom(player1.room_id,{romm_type})\n'.format(user1=user_mid[0],
+                                                                                user2=user_mid[1], gameType=play,
+                                                                                room_data=options,
+                                                                                room_key=create_key,
+                                                                                card_data=cards,
+                                                                                romm_type=join_romm_type)
 
-        return fixed_code, disconnect_code
-    except Exception as err:
-        logging.info(err)
+        disconnect_code = '        time.sleep(5)\n' \
+                          '        player1.ConnectClose()\n' \
+                          '        player2.ConnectClose()\n'
+
+    return fixed_code, disconnect_code
+
 
 # 将操作步骤进行转换
 def transform_operate_data(play,operate_data):
     MajiangGameNameList = ["长沙麻将", "红中麻将", "转转麻将", "衡阳麻将", '新宁麻将', '邵阳麻将', '靖州麻将']
     operate_code = []
-    try:
-        for data in operate_data:
-            print("xxxxx", data)
-            if play in MajiangGameNameList:
-                if len(data['card']) != 0:
-                    data['card'] += r'\x00'
-                code = ''
-                for k, v in data.items():
+    for data in operate_data:
+        print("xxxxx", data)
+        if play in MajiangGameNameList:
+            if len(data['card']) != 0:
+                for i in range(len(data['card'])):
+                    data['card'][i] =  data['card'][i] + '\x00'
 
-                    if k == "users":
-                        if '玩家1' == v:
-                            code += '        player1.'
-                        elif '玩家2' == v:
-                            code += '        player2.'
-                        elif '玩家3' == v:
-                            code += '        player3.'
-                        elif '玩家4' == v:
-                            code += '        player4.'
+            code = ''
+            for k, v in data.items():
 
-                    if k == "operation":
-                        if v == "出牌":
-                            code += "OperateApi('出', '', '%s')\n" % data['card']
-                        if v == "碰牌":
-                            code += "OperateApi('碰')\n"
-                        if v == "过牌":
-                            code += "OperateApi('过')\n"
-                        if v == "胡牌":
-                            code += "OperateApi('胡')\n"
-                        if v == "吃牌":
-                            code += "OperateApi('吃', '', '%s')\n" % data['card']
-                        if v == "补杠":
-                            code += "OperateApi('补杠', '', '%s')\n" % data['card']
-                        if v == "飘分":
-                            code += "OperateApi('飘分', '', %d)\n" % int(data['card'][0])
-                        if v =="加锤":
-                            code += "OperateApi('加锤', '', %d)\n" % int(data['card'][0])
+                if k == "users":
+                    if '玩家1' == v:
+                        code += '        player1.'
+                    elif '玩家2' == v:
+                        code += '        player2.'
+                    elif '玩家3' == v:
+                        code += '        player3.'
+                    elif '玩家4' == v:
+                        code += '        player4.'
+
+                if k == "operation":
+                    if v == "出牌":
+                        code += "OperateApi('出', '', %s)\n" % data['card']
+                    if v == "碰牌":
+                        code += "OperateApi('碰')\n"
+                    if v == "过牌":
+                        code += "OperateApi('过')\n"
+                    if v == "胡牌":
+                        code += "OperateApi('胡')\n"
+                    if v == "吃牌":
+                        code += "OperateApi('吃', '', %s)\n" % data['card']
+                    if v == "补杠":
+                        code += "OperateApi('补杠', '', %s)\n" % data['card']
+                    if v == "飘分":
+                        code += "OperateApi('飘分', '', %d)\n" % int(data['card'][0])
+                    if v =="加锤":
+                        code += "OperateApi('加锤', '', %d)\n" % int(data['card'][0])
 
 
-                operate_code.append(code)
-            else:
-                code = ''
-                for k, v in data.items():
+            operate_code.append(code)
+        else:
+            code = ''
+            for k, v in data.items():
+                if k == "users":
+                    if '玩家1' == v:
+                        code += '        player1.'
+                    elif '玩家2' == v:
+                        code += '        player2.'
+                    elif '玩家3' == v:
+                        code += '        player3.'
+                    elif '玩家4' == v:
+                        code += '        player4.'
 
-                    if k == "users":
-                        if '玩家1' == v:
-                            code += '        player1.'
-                        elif '玩家2' == v:
-                            code += '        player2.'
-                        elif '玩家3' == v:
-                            code += '        player3.'
-                        elif '玩家4' == v:
-                            code += '        player4.'
-
-                    if k == "operation":
-                        if v == "出牌":
-                            code += "OperateApi('出', '', '%s')\n" % data['card']
-                            code += '        time.sleep(1)\n'
-                        if v == "碰牌":
-                            code += "OperateApi('碰')\n"
-                            code += '        time.sleep(1)\n'
-                        if v == "过牌":
-                            code += "OperateApi('过')\n"
-                            code += '        time.sleep(1)\n'
-                        if v == "胡牌":
-                            code += "OperateApi('胡')\n"
-                            code += '        time.sleep(1)\n'
-                        if v == "吃牌":
-                            code += "OperateApi('吃', '', '%s')\n" % data['card']
-                            code += '        time.sleep(1)\n'
-                        if v == "补杠":
-                            code += "OperateApi('补杠', '', '%s')\n" % data['card']
-                            code += '        time.sleep(1)\n'
-                operate_code.append(code)
-
-        return operate_code
-    except Exception as err:
-        logging.info(err)
+                if k == "operation":
+                    if v == "出牌":
+                        code += "OperateApi('出', '', %s)\n" % data['card']
+                        code += '        time.sleep(1)\n'
+                    if v == "碰牌":
+                        code += "OperateApi('碰')\n"
+                        code += '        time.sleep(1)\n'
+                    if v == "过牌":
+                        code += "OperateApi('过')\n"
+                        code += '        time.sleep(1)\n'
+                    if v == "胡牌":
+                        code += "OperateApi('胡')\n"
+                        code += '        time.sleep(1)\n'
+                    if v == "吃牌":
+                        code += "OperateApi('吃', '', %s)\n" % data['card']
+                        code += '        time.sleep(1)\n'
+                    
+                    if v =="加锤":
+                        code += "OperateApi('加锤','','%s')\n" % data['card']
+            operate_code.append(code)
+    return operate_code
 
 
 

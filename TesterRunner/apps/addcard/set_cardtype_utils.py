@@ -92,8 +92,9 @@ class TestLoginPerfor(object):
 
 def put_in_the_room(ip,port,cards,roomID,sever_id=1400):
     try:
+        _card= data_dict(cards)
         config_card_data = {'protocol': 10002, 'sever_type': 2, 'sever_id':0, 'subcmd': 65534,
-                            'card_type': json.dumps(cards), 'room_id': int(roomID)}
+                            'card_type':_card , 'room_id': int(roomID)}  #json.dumps(cards)
         card_data = pack_data(config_card_data)
         test = TestLoginPerfor(ip, int(port))
         test.send_data(card_data)
@@ -104,6 +105,54 @@ def put_in_the_room(ip,port,cards,roomID,sever_id=1400):
         return  err
 
 
+def data_dict(a):
+    '''数据换行'''
+    data = "{"
+    for k, v in a.items():
+        data += '"%s"' % k + ':['
+        for i in range(len(v)):
+            data += '"%s"' % v[i]
+            if i != len(v) - 1:
+                data += ","
+        data += "],\n"
+    data += "}"
+    return  data
 
 
+def data_list(list_data):
+    '''list数据转换成dict'''
+    try:
+        data = "{"
+        index = 0
+        for d in list_data[0]:
+            index += 1
+            data += '"%d"' % index + ':['
+            str_d = "".join(d)
+            str_d = str_d.replace(",", "")
+
+            for x in range(0, len(str_d), 2):
+                if x + 2 <= len(str_d):
+                    data += '"%s"' % str_d[x:x + 2]
+                    if x + 2 != len(str_d):
+                        data += ","
+
+            data += "]"
+            print(index, len(list_data[0]))
+            if index != len(list_data[0]):
+                data += ",\n"
+        data += "}"
+        return data
+    except Exception as err:
+        return False
+
+def runfast_checkout(data):
+    '''过滤是否有跑得快数据'''
+    for k, v in data.items():
+        for i in v:
+            if "h" in i:
+                return False
+            elif "c" in i:
+                return False
+            elif "d" in i:
+                return False
 
